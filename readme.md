@@ -2,7 +2,7 @@
 
 - atcoder-tools は神なのでそれをつかおう
 - ps1 で長く使いながら機能追加してったらやりすぎてクソコードになったので最低限以外消す + python でリファクタリング
-- 自分用に自分で作りたかっただけなのでテンプレートの変な性質を仮定したりしていてぼくしか動かせないかも
+- 自分の環境で動けばヨシ！
 
 ## 以下、めも
 
@@ -12,8 +12,8 @@
 macros.txt
 ```
 sub = python ac/ac.py submit $*
-cp = python ac/ac.py copy
-clr = python ac/ac.py clear
+cp = python ac/ac.py copy $*
+clr = python ac/ac.py clear $*
 mksnip = python ac/ac.py make-snippet $*
 ```
 とかして VS 内ターミナルを`cmd /K DOSKEY /MACROFILE=macros.txt`とかにする
@@ -30,7 +30,7 @@ mksnip = python ac/ac.py make-snippet $*
 	+ `start`: コンテスト(/ばちゃ)開始と同時に、用意されたコンテスト(/ばちゃ)情報にある問題のテストケースをダウンロードする
 - コンテスト(/ばちゃ)中:
 	+ `sub x`: 整形して、問題 x のサンプルチェックをして、AC なら提出 オプション:
-		* `-a`: ステータスにかかわらず、yn で提出するか選択(答えが複数ある問題など)
+		* `-c`: ステータスにかかわらず、yn で提出するか選択(答えが複数ある問題など)
 		* `-f`: コンパイルせずに提出(abc_a など)(最近使ってないけど)(WA でるので)
 	+ `cp`: 整形して、クリップボードにコピー(atcoder 以外のコンテストサイトなどで)
 	+ `clr`: 全部消しテンプレートを貼る
