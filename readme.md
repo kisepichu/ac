@@ -1,14 +1,14 @@
-# �����p���v���c�[��(���肩��)
+﻿# 自分用競プロツール(つくりかけ)
 
-- atcoder-tools �͐_�Ȃ̂ł����������
-- ps1 �Œ����g���Ȃ���@�\�ǉ����Ă������肷���ăN�\�R�[�h�ɂȂ����̂ōŒ���ȊO���� + python �Ń��t�@�N�^�����O
-- �����̊��œ����΃��V�I
+- atcoder-tools は神なのでそれをつかおう
+- ps1 で長く使いながら機能追加してったらやりすぎてクソコードになったので最低限以外消す + python でリファクタリング
+- 自分の環境で動けばヨシ！
 
-## �ȉ��A�߂�
+## 以下、めも
 
-- �R���e�X�g���� Visual Studio ���g���A�\�[�X�t�@�C���� 1 �����g���܂킷
-- �R���e�X�g(/�΂���)�O�ɏ������āA�R���e�X�g/(�΂���)���ɒZ���R�}���h�ő���ł���悤�ɂ���
-- cmd �̃G�C���A�X�I�Ȃ̂�`ac.py submit x`�݂����̂�`sub x`�����ŏ�����悤�ɂ���: \\
+- コンテスト中に Visual Studio を使い、ソースファイルを 1 個だけ使いまわす
+- コンテスト(/ばちゃ)前に準備して、コンテスト/(ばちゃ)中に短いコマンドで操作できるようにする
+- cmd のエイリアス的なので`ac.py submit x`みたいのを`sub x`だけで書けるようにする: \\
 macros.txt
 ```
 sub = python ac/ac.py submit $*
@@ -16,30 +16,30 @@ cp = python ac/ac.py copy $*
 clr = python ac/ac.py clear $*
 mksnip = python ac/ac.py make-snippet $*
 ```
-�Ƃ����� VS ���^�[�~�i����`cmd /K DOSKEY /MACROFILE=macros.txt`�Ƃ��ɂ���
-- ���́u���`���āv�̈Ӗ�:
-	+ `//sub-BOF`����`//sub-EOF`�܂ł̃R�[�h��]������
-	+ �����e���v���[�g�̏㕔�� solve() �ߕӂ������Asubmission ��ʂŃX�N���[�������ɍςނ悤�ɂ���
-	+ ���ł̓��C�u������\���������͏ȗ����A���C�u�����������\������
+とかして VS 内ターミナルを`cmd /K DOSKEY /MACROFILE=macros.txt`とかにする
+- ↓の「整形して」の意味:
+	+ `//sub-BOF`から`//sub-EOF`までのコードを評価する
+	+ 長いテンプレートの上部に solve() 近辺を書き、submission 画面でスクロールせずに済むようにする
+	+ ↑ではライブラリを貼った部分は省略し、ライブラリ名だけ表示する
 
-## �d�l �\��
+## 仕様 予定
 
-### �c���@�\
+### 残す機能
 
-- �R���e�X�g(/�΂���)�O:
-	+ `start`: �R���e�X�g(/�΂���)�J�n�Ɠ����ɁA�p�ӂ��ꂽ�R���e�X�g(/�΂���)���ɂ�����̃e�X�g�P�[�X���_�E�����[�h����
-- �R���e�X�g(/�΂���)��:
-	+ `sub x`: ���`���āA��� x �̃T���v���`�F�b�N�����āAAC �Ȃ��o �I�v�V����:
-		* `-c`: �X�e�[�^�X�ɂ�����炸�Ayn �Œ�o���邩�I��(����������������Ȃ�)
-		* `-f`: �R���p�C�������ɒ�o(abc_a �Ȃ�)(�ŋߎg���ĂȂ�����)(WA �ł�̂�)
-	+ `cp`: ���`���āA�N���b�v�{�[�h�ɃR�s�[(atcoder �ȊO�̃R���e�X�g�T�C�g�Ȃǂ�)
-	+ `clr`: �S�������e���v���[�g��\��
-- �R���e�X�g(/�΂���)�ȊO
-	+ `mksnip`: [���C�u����](https://tqkoh.github.io/library/)����\�[�X�R�[�h�������Ă��ăX�j�y�b�g������ (�^�C�g��)[tab] �Ɠ��͂���ƃ��C�u�����̒��g���\����悤�ɂ���(#include �Ŗ��ߍ��܂���̂ق����������������A���C�u�����̒��g�����̏�ł����肽������)
+- コンテスト(/ばちゃ)前:
+	+ `start`: コンテスト(/ばちゃ)開始と同時に、用意されたコンテスト(/ばちゃ)情報にある問題のテストケースをダウンロードする
+- コンテスト(/ばちゃ)中:
+	+ `submit x`: 整形して、問題 x のサンプルチェックをして、AC なら提出 オプション:
+		* `-c`: ステータスにかかわらず、yn で提出するか選択(答えが複数ある問題など)
+		* `-f`: コンパイルせずに提出(abc_a など)(最近使ってないけど)(WA でるので)
+	+ `copy`: 整形して、クリップボードにコピー(atcoder 以外のコンテストサイトなどで)
+	+ `clear`: 全部消しテンプレートを貼る
+- コンテスト(/ばちゃ)以外
+	+ `make-snippet`: [ライブラリ](https://tqkoh.github.io/library/)からソースコードを持ってきてスニペット化する (タイトル)[tab] と入力するとライブラリの中身が貼られるようにする(#include で提出されるときに埋め込まれるやつのほうがかっこいいが、ライブラリの中身をその場でいじりたいため)
 
-### �Ή�����T�C�g
+### 対応するサイト
 
 - AtCoder
-	+ �΂��� AtCoder Problems
-	+ �΂��� AVC
-- CodeForces(�ǉ�)(�ł�����)
+	+ ばちゃ AtCoder Problems
+	+ ばちゃ AVC
+- CodeForces(追加)(できたら)

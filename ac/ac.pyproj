@@ -22,25 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="submit\main.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="submit\__init__.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="test\main.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="test\__init__.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="ac.py">
       <SubType>Code</SubType>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="test\" />
-    <Folder Include="submit\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

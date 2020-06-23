@@ -1,4 +1,4 @@
-# coding: utf-8
+﻿# coding: utf-8
 
-def copy(args):
+def copy(args,config):
 	return

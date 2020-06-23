@@ -1,0 +1,8 @@
+﻿root = true
+
+[]
+indent_style = tab
+indent_size  = tab
+
+[.cpp]
+tab_width = 4

@@ -14,7 +14,6 @@ class CodeForces:
 		return
 
 	def test(self):
-		print('codeforces')
 		return
 	
 	def submit(self):
