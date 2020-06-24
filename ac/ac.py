@@ -4,7 +4,7 @@ import sys
 import os
 import argparse
 import yaml
-from command.start import *
+from command.init import *
 from command.submit import *
 from command.copy import *
 from command.clear import *
@@ -18,9 +18,9 @@ def main():
 	parser = argparse.ArgumentParser(description='perf +100')
 	subparsers = parser.add_subparsers()
 
-	# start
-	parser_start = subparsers.add_parser('start')
-	parser_start.set_defaults(handler=start)
+	# init
+	parser_init = subparsers.add_parser('init')
+	parser_init.set_defaults(handler=init)
 
 	# submit
 	parser_submit = subparsers.add_parser('submit', help='see `submit -h`')

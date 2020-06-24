@@ -10,10 +10,7 @@ class CodeForces:
 	def get_problems(self):
 		return
 	
-	def download_testcase(self):
-		return
-
-	def test(self):
+	def download_testcases(self):
 		return
 	
 	def submit(self):
