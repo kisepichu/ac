@@ -13,8 +13,8 @@ from command.oj.atcoder import AtCoder
 from command.oj.codeforces import CodeForces
 
 def submit(args, config):
-	print('args: ', args)
-	print('config: ', config)
+	# print('args: ', args)
+	# print('config: ', config)
 
 	devnull = open(os.devnull, 'w')
 	
@@ -32,7 +32,7 @@ def submit(args, config):
 		raise Exception(f'no such online judge: {oj_name}')
 	
 	# format
-	with open(config['source_path'], mode='r') as f:
+	with open(config['source_path'], encoding="utf-8_sig", mode='r') as f:
 		source = f.read()
 	with open(config['formatted_path'], mode='w') as f:
 		source = format(source)
@@ -60,6 +60,7 @@ def submit(args, config):
 	if args.choose or not testcase_num:
 		submit_flag = query_submit()
 	if submit_flag:
+		print(problem, config['language_id'], source)
 		oj.submit(problem, config['language_id'], source)
-	
+	print_submitted(submit_flag)
 	return

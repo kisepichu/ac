@@ -62,12 +62,12 @@ class AtCoder:
 	
 	def submit(self, problem, language_id, source):
 		payload = {
-			'data.TaskScreename':problem[2],
+			'data.TaskScreenName':problem[2],
 			'data.LanguageId':language_id,
 			'sourceCode':source,
 			'csrf_token':self.csrf_token
 		}
-		self.session.post(f'https://atcoder.jp/contests/{problem[1]}/submit', data=payload)
-		return
+		print(payload)
+		return self.session.post(f'https://atcoder.jp/contests/{problem[1]}/submit', data=payload).content
 
 

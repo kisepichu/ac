@@ -1,5 +1,5 @@
 ﻿source_path: '../example.cpp'
 formatted_path: 'data/tmp/formatted.cpp'
-executable_path: '../a.exe'
+executable_path: '../a.out'
 language_id: 4003
-compile: 'g++ ../example.cpp --exec-charset=cp932 --input-charset=utf-8 -O2 -o ../a.exe'
+compile: 'g++ ../example.cpp --exec-charset=cp932 --input-charset=utf-8 -O2 -o ../a.out'

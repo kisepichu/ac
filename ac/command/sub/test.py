@@ -2,4 +2,4 @@
 
 def test(path):
 
-	return 'WA'
+	return 'WA', 2

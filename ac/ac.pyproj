@@ -4,14 +4,18 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>52d6aa12-6205-4a7c-8cc1-bf8c632384f4</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>ac.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>ac</Name>
     <RootNamespace>ac</RootNamespace>
+    <TestFramework>Pytest</TestFramework>
+    <IsWindowsApplication>False</IsWindowsApplication>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <CommandLineArguments>submit a</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,6 +29,70 @@
     <Compile Include="ac.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="command\clear.py" />
+    <Compile Include="command\copy.py" />
+    <Compile Include="command\init.py" />
+    <Compile Include="command\make_snippet.py" />
+    <Compile Include="command\oj\atcoder.py" />
+    <Compile Include="command\oj\codeforces.py" />
+    <Compile Include="command\submit.py" />
+    <Compile Include="command\sub\colors.py" />
+    <Compile Include="command\sub\format.py" />
+    <Compile Include="command\sub\format_ans.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="command\sub\scripts.py" />
+    <Compile Include="command\sub\test.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="command\" />
+    <Folder Include="command\codeforces\" />
+    <Folder Include="command\oj\" />
+    <Folder Include="command\oj\__pycache__\" />
+    <Folder Include="command\sub\" />
+    <Folder Include="command\sub\__pycache__\" />
+    <Folder Include="command\__pycache__\" />
+    <Folder Include="data\" />
+    <Folder Include="data\contest\" />
+    <Folder Include="data\testcase\" />
+    <Folder Include="data\testcase\atcoder\" />
+    <Folder Include="data\testcase\atcoder\abc171\" />
+    <Folder Include="data\testcase\codeforces\" />
+    <Folder Include="data\tmp\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="command\oj\__pycache__\atcoder.cpython-36.pyc" />
+    <Content Include="command\oj\__pycache__\atcoder.cpython-37.pyc" />
+    <Content Include="command\oj\__pycache__\codeforces.cpython-36.pyc" />
+    <Content Include="command\oj\__pycache__\codeforces.cpython-37.pyc" />
+    <Content Include="command\sub\__pycache__\colors.cpython-36.pyc" />
+    <Content Include="command\sub\__pycache__\colors.cpython-37.pyc" />
+    <Content Include="command\sub\__pycache__\format.cpython-36.pyc" />
+    <Content Include="command\sub\__pycache__\format.cpython-37.pyc" />
+    <Content Include="command\sub\__pycache__\scripts.cpython-36.pyc" />
+    <Content Include="command\sub\__pycache__\scripts.cpython-37.pyc" />
+    <Content Include="command\sub\__pycache__\test.cpython-36.pyc" />
+    <Content Include="command\sub\__pycache__\test.cpython-37.pyc" />
+    <Content Include="command\__pycache__\clear.cpython-36.pyc" />
+    <Content Include="command\__pycache__\clear.cpython-37.pyc" />
+    <Content Include="command\__pycache__\copy.cpython-36.pyc" />
+    <Content Include="command\__pycache__\copy.cpython-37.pyc" />
+    <Content Include="command\__pycache__\init.cpython-36.pyc" />
+    <Content Include="command\__pycache__\init.cpython-37.pyc" />
+    <Content Include="command\__pycache__\make_snippet.cpython-36.pyc" />
+    <Content Include="command\__pycache__\make_snippet.cpython-37.pyc" />
+    <Content Include="command\__pycache__\start.cpython-37.pyc" />
+    <Content Include="command\__pycache__\submit.cpython-36.pyc" />
+    <Content Include="command\__pycache__\submit.cpython-37.pyc" />
+    <Content Include="command\__pycache__\test.cpython-37.pyc" />
+    <Content Include="data\contest\problems.csv" />
+    <Content Include="data\testcase\atcoder\.gitkeep" />
+    <Content Include="data\testcase\atcoder\abc171\abc171_a_1.input" />
+    <Content Include="data\testcase\atcoder\abc171\abc171_a_1.output" />
+    <Content Include="data\testcase\atcoder\abc171\abc171_a_2.input" />
+    <Content Include="data\testcase\atcoder\abc171\abc171_a_2.output" />
+    <Content Include="data\testcase\codeforces\.gitkeep" />
+    <Content Include="data\tmp\formatted.cpp" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

@@ -9,7 +9,6 @@ def print_dltestcases(testcase_num):
 		print(f'downloaded {testcase_num} testcases')
 
 def print_status(status, testcase_num):
-	print(CCEBG+'TEST'+CEND)
 	if status == 'AC':
 		print(CACBG + 'AC' + CEND, end='')
 	elif status == 'WA':
@@ -19,9 +18,15 @@ def print_status(status, testcase_num):
 	else:
 		print(CCEBG + status + CEND, end='')
 	if not testcase_num:
-		print(CWABG + 'NT' + CEND, end='')
+		print(' ' + CWABG + 'NT' + CEND, end='')
 	print()
 
 def query_submit():
 	print('submit? [Y,n]', end="")
 	return(input() in ['Y','y'])
+
+def print_submitted(f):
+	if f:
+		print(CAC + 'submitted' + CEND)
+	else:
+		print(CCE + 'not submitted' + CEND)
