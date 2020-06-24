@@ -3,20 +3,27 @@
 - atcoder-tools は神なのでそれをつかおう
 - ps1 で長く使いながら機能追加してったらやりすぎてクソコードになったので最低限以外消す + python でリファクタリング
 - 自分の環境で動けばヨシ！
+```bash
+pip3 install pyyaml
+pip3 install requests
+pip3 install lxml
+```
+とかが必要
 
 ## 以下、めも
 
-- コンテスト中に Visual Studio を使い、ソースファイルを 1 個だけ使いまわす
+- コンテスト中にソースファイルを 1 個だけ使いまわしたい
 - コンテスト(/ばちゃ)前に準備して、コンテスト/(ばちゃ)中に短いコマンドで操作できるようにする
-- cmd のエイリアス的なので`ac.py submit x`みたいのを`sub x`だけで書けるようにする: \\
-macros.txt
+- エイリアス的なので`ac.py submit x`みたいのを`sub x`だけで書けるようにする: \\
+~/.bashrc
 ```
-sub = python ac/ac.py submit $*
-cp = python ac/ac.py copy $*
-clr = python ac/ac.py clear $*
-mksnip = python ac/ac.py make-snippet $*
+alias pre='python3 ac/ac.py init'
+alias sub='python3 ac/ac.py submit'
+alias cpy='python3 ac/ac.py copy'
+alias clr='python3 ac/ac.py clear'
+alias mksnip='python3 ac/ac.py make-snippet'
 ```
-とかして VS 内ターミナルを`cmd /K DOSKEY /MACROFILE=macros.txt`とかにする
+とかするとよさそう
 - ↓の「整形して」の意味:
 	+ `//sub-BOF`から`//sub-EOF`までのコードを評価する
 	+ 長いテンプレートの上部に solve() 近辺を書き、submission 画面でスクロールせずに済むようにする

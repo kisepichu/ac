@@ -1,4 +1,5 @@
 ﻿# coding: utf-8
 
-def format():
-	return
+def format(s):
+	t = s
+	return t

@@ -5,13 +5,18 @@ import os
 import lxml.html
 import pathlib
 import sys
+import subprocess
 from command.sub.format import format
 from command.sub.test import test
+from command.sub.scripts import *
 from command.oj.atcoder import AtCoder
 from command.oj.codeforces import CodeForces
 
 def submit(args, config):
-	# print(args)
+	print('args: ', args)
+	print('config: ', config)
+
+	devnull = open(os.devnull, 'w')
 	
 	problem_number = ord(args.problem_char) - ord('a')
 
@@ -19,20 +24,42 @@ def submit(args, config):
 		problem = f.readlines()[problem_number].split(',')
 		problem[2]=problem[2][:-1]
 
-	oj_name = problem[0]
-	contest_id = problem[1]
-	problem_id = problem[2]
-
-	if oj_name == 'atcoder':
+	if problem[0] == 'atcoder':
 		oj = AtCoder()
-	elif oj_name == 'codeforces':
+	elif problem[0] == 'codeforces':
 		oj = CodeForces()
 	else:
 		raise Exception(f'no such online judge: {oj_name}')
 	
-	oj.dev(problem)
 	# format
-	# oj.test()
-	# oj.submit()
+	with open(config['source_path'], mode='r') as f:
+		source = f.read()
+	with open(config['formatted_path'], mode='w') as f:
+		source = format(source)
+		f.write(source)
+	
+	# download testcases
+	print_dltestcases(oj.download_testcases(problem))
+
+	# compile
+	if os.path.exists(config['executable_path']):
+		os.remove(config['executable_path'])
+	subprocess.run(config['compile'].split())
+	if not os.path.exists(config['executable_path']):
+		print_status('CE', -1)
+		return
+
+	# test
+	status, testcase_num = test(f'data/testcase/atcoder/{problem[1]}/')
+	print_status(status, testcase_num)
+
+	# submit
+	submit_flag = 1
+	if status == 'WA':
+		submit_flag = 0
+	if args.choose or not testcase_num:
+		submit_flag = query_submit()
+	if submit_flag:
+		oj.submit(problem, config['language_id'], source)
 	
 	return

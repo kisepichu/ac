@@ -4,6 +4,9 @@ import sys
 import os
 import argparse
 import yaml
+
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 from command.init import *
 from command.submit import *
 from command.copy import *
@@ -11,7 +14,6 @@ from command.clear import *
 from command.make_snippet import *
 
 def main():
-
 	with open('config.yml', encoding="utf-8_sig", mode='r') as f:
 		config = yaml.load(f, Loader=yaml.SafeLoader)
 

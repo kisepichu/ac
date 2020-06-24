@@ -40,8 +40,10 @@ class AtCoder:
 		os.makedirs(path)
 
 		res = self.session.get(f'https://atcoder.jp/contests/{problem[1]}/tasks/{problem[2]}?lang=ja')
+		if res.status_code != 200:
+			raise Exception(f'status_code {res.status_code}: https://atcoder.jp/contests/{problem[1]}/tasks/{problem[2]}?lang=ja')
+		
 		tree = lxml.html.fromstring(res.text)
-
 		cnt = 0
 		while len(tree.xpath(f'//h3[text()="入力例 {cnt+1}"]')):
 			cnt += 1
@@ -58,16 +60,14 @@ class AtCoder:
 
 		return cnt
 	
-	def submit(self, problem, language_id, submit_source):
+	def submit(self, problem, language_id, source):
 		payload = {
 			'data.TaskScreename':problem[2],
 			'data.LanguageId':language_id,
-			'sourceCode':submit_source,
+			'sourceCode':source,
 			'csrf_token':self.csrf_token
 		}
-		self.session.post(f'https://atcoder.jp/contests/{contest_id}/submit', data=payload)
+		self.session.post(f'https://atcoder.jp/contests/{problem[1]}/submit', data=payload)
 		return
 
-	def dev(self,problem):
-		print(self.download_testcases(problem))
 

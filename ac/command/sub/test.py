@@ -1,4 +1,5 @@
 ﻿# coding: utf-8
 
-def test():
-	return
+def test(path):
+
+	return 'WA'
