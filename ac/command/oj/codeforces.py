@@ -1,4 +1,4 @@
-﻿# coding: utf-8
+# coding: utf-8
 
 class CodeForces:
 	def __init__(self):
@@ -8,6 +8,9 @@ class CodeForces:
 		return
 
 	def get_problems(self):
+		return
+
+	def get_start_time(self, contest_id):
 		return
 	
 	def download_testcases(self):

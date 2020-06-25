@@ -1,6 +1,8 @@
-﻿# coding: utf-8
+# coding: utf-8
 
+from datetime import datetime, timedelta
 from command.sub.colors import *
+from command.sub.format_statement import pat
 
 def print_dltestcases(testcase_num):
 	if testcase_num == -1:
@@ -51,3 +53,11 @@ def print_summary(cnt, results):
 			print(' ', end='')
 		print(' ┃')
 	print('┗' + '━' * (12+tle_exists) + '┛')
+
+def print_statement(statement):
+	for before, after in pat:
+		statement=statement.replace(before, after)
+	print(statement)
+
+def print_time():
+	print(CGRAY + str(datetime.now()) + CEND)

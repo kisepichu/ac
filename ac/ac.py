@@ -23,7 +23,6 @@ def main():
 	# init
 	parser_init = subparsers.add_parser('init')
 	parser_init.add_argument('contest_url', help='atcoder, ')
-	parser_init.add_argument('-s', '--start-time', default='2100', help='2100, 2020/6/25 14:25:00')
 	parser_init.add_argument('-d', '--download', action='store_false', help='download testcases when the contest starts')
 	parser_init.add_argument('-a', '--show-a', action='store_true', help='show the statement of problem a when the contest starts')
 	parser_init.set_defaults(handler=init)

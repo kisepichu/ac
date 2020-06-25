@@ -6,6 +6,7 @@ import urllib
 import os
 import sys
 import lxml.html
+from datetime import datetime
 
 class AtCoder:
 	LOGIN_URL = 'https://atcoder.jp/login'
@@ -16,8 +17,8 @@ class AtCoder:
 
 	def get_session(self):
 		self.session = requests.Session()
-		response = self.session.get(self.LOGIN_URL)
-		tree = lxml.html.fromstring(response.text)
+		res = self.session.get(self.LOGIN_URL)
+		tree = lxml.html.fromstring(res.text)
 		self.csrf_token = tree.xpath('//*[@name="csrf_token"]/@value')[0]
 		payload = {
 			'username':os.environ.get('ac_id'),
@@ -27,20 +28,50 @@ class AtCoder:
 		self.session.post(self.LOGIN_URL, data=payload)
 		return
 
+	def get_statement_a(self, contest_id):
+		res = self.session.get(f'https://atcoder.jp/contests/{contest_id}/tasks_print?lang=ja')
+		tree = lxml.html.fromstring(res.text)
+
+		statementx=tree.xpath(f'/html/body/div[@id="main-div"]/div[@id="main-container"]/div[@class="row"]/div[@class="col-sm-12"][1]/div[@id="task-statement"]/span[@class="lang"]/span[@class="lang-ja"]/div[@class="part"][1]/section')
+		inputx=tree.xpath(f'/html/body/div[@id="main-div"]/div[@id="main-container"]/div[@class="row"]/div[@class="col-sm-12"][1]/div[@id="task-statement"]/span[@class="lang"]/span[@class="lang-ja"]/div[@class="io-style"]/div[@class="part"][1]/section')
+		insamplex=tree.xpath(f'/html/body/div[@id=\'main-div\']/div[@id=\'main-container\']/div[@class=\'row\']/div[@class=\'col-sm-12\']/div[@id=\'task-statement\']/span[@class=\'lang\']/span[@class=\'lang-ja\']/div[@class=\'part\'][3]/section')
+		outsamplex=tree.xpath(f'/html/body/div[@id=\'main-div\']/div[@id=\'main-container\']/div[@class=\'row\']/div[@class=\'col-sm-12\']/div[@id=\'task-statement\']/span[@class=\'lang\']/span[@class=\'lang-ja\']/div[@class=\'part\'][4]/section')
+		
+		statement=statementx[0].text_content()[6:]
+		statement+="in.\n"+inputx[0][2].text_content()
+		statement+="ex.\n"+insamplex[0][1].text_content()+"  ->  "+outsamplex[0][1].text_content()
+		
+		return statement
+
+
 	def get_problems(self, contest_id):
 		res = self.session.get(f'https://atcoder.jp/contests/{contest_id}/submit')
 		tree = lxml.html.fromstring(res.text)
 		problem_ids = tree.xpath('//*[@id="select-task"]/option/@value')
 		problems = []
 		for problem_id in problem_ids:
-			problems.append({'atcoder', contest_id, problem_id})
+			problems.append(['atcoder', contest_id, problem_id])
 		return problems
+
+	def get_start_time(self, contest_id):
+		res = self.session.get(f'https://atcoder.jp/contests/{contest_id}')
+		tree = lxml.html.fromstring(res.text)
+		start_str = tree.xpath('//*[@class="fixtime fixtime-full"]')[0].text_content()
+		# start_str = '2020-6-25 23:52:00+0900'
+		return datetime.strptime(start_str[:-5], '%Y-%m-%d %H:%M:%S')
+
+	def get_contest_id(self, urlpath):
+		if len(urlpath) >= 2 and urlpath[0] == 'contests':
+			return urlpath[1]
+		else:
+			return None
 	
 	def download_testcases(self, problem):
 		test_dir = f'data/testcase/atcoder/{problem[1]}/'
-		if os.path.exists(test_dir):
+		if os.path.exists(test_dir + f'{problem[2]}_1.input'):
 			return -1
-		os.makedirs(test_dir)
+		if not os.path.exists(test_dir):
+			os.makedirs(test_dir)
 
 		res = self.session.get(f'https://atcoder.jp/contests/{problem[1]}/tasks/{problem[2]}?lang=ja')
 		if res.status_code != 200:

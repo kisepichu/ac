@@ -44,6 +44,9 @@
     <Compile Include="command\sub\format_ans.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="command\sub\format_statement.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="command\sub\scripts.py" />
     <Compile Include="command\sub\test.py" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿# coding: utf-8
+# coding: utf-8
 
 CAC = '\33[38;2;92;184;92m'
 CWA = '\33[38;2;240;173;78m'
@@ -34,7 +34,7 @@ CVIOLETBG = '\33[45m'
 CCYANBG  = '\33[46m'
 CWHITEBG  = '\33[47m'
 
-CGREY    = '\33[90m'
+CGRAY    = '\33[90m'
 CRED2    = '\33[91m'
 CGREEN2  = '\33[92m'
 CYELLOW2 = '\33[93m'
@@ -43,7 +43,7 @@ CVIOLET2 = '\33[95m'
 CCYAN2  = '\33[96m'
 CWHITE2  = '\33[97m'
 
-CGREYBG    = '\33[100m'
+CGRAYBG    = '\33[100m'
 CREDBG2    = '\33[101m'
 CGREENBG2  = '\33[102m'
 CYELLOWBG2 = '\33[103m'
