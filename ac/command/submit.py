@@ -38,6 +38,12 @@ def submit(args, config):
 		source = format(source)
 		f.write(source)
 	
+	# -f option
+	if args.force:
+		oj.submit(problem, config['language_id'], source)
+		print_submitted(1)
+		return
+
 	# download testcases
 	print_dltestcases(oj.download_testcases(problem))
 

@@ -20,13 +20,15 @@ def test(config, problem):
 		with open(test_dir + f'{problem[2]}_{cnt}.input', encoding='utf-8_sig', mode='r') as f:
 			input = f.read()
 		try:
-			output = subprocess.run(config['execute'].split(), input=input.encode(), stdout=subprocess.PIPE, timeout=3)
+			output = subprocess.run(config['execute'].split(), input=input.encode(), stdout=subprocess.PIPE, check=1, timeout=3).stdout.decode()
 		except subprocess.CalledProcessError as e:
 			result = 'RE'
 			results_or |= 4
+			output = '(RE)'
 		except subprocess.TimeoutExpired as e:
 			result = 'TLE'
 			results_or |= 1
+			output = '(TLE)'
 		# proc = subprocess.Popen(config['execute'].split(), stdout=subprocess.PIPE)
 		# output = proc.communicate(input)[0]
 		# exit_code = proc.returncode
@@ -35,13 +37,13 @@ def test(config, problem):
 			expected = f.read()
 
 		if result == 'WJ':
-			if format_ans(output) == format_ans(expected):
+			if format_ans(expected) == format_ans(output):
 				result = 'AC'
 			else:
 				result = 'WA'
 				results_or |= 2
 
-		print_case(input, expected, output, result)
+		print_case(cnt, input, expected, output, result)
 		results.append(result)
 
 	result = 'WJ'

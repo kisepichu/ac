@@ -27,7 +27,7 @@ def main():
 	# submit
 	parser_submit = subparsers.add_parser('submit', help='see `submit -h`')
 	parser_submit.add_argument('-c', '--choose', action='store_true', help='choose whether to submit')
-	parser_submit.add_argument('-m', '--manual', action='store_true', help='')
+	parser_submit.add_argument('-f', '--force', action='store_true', help='')
 	parser_submit.add_argument('problem_char', help='a-z')
 	parser_submit.set_defaults(handler=submit)
 
