@@ -45,17 +45,16 @@ def submit(args, config):
 	if os.path.exists(config['executable_path']):
 		os.remove(config['executable_path'])
 	subprocess.run(config['compile'].split())
-	if not os.path.exists(config['executable_path']):
-		print_status('CE', -1)
-		return
 
 	# test
-	status, testcase_num = test(f'data/testcase/atcoder/{problem[1]}/')
+	status, testcase_num = test(config, problem)
 	print_status(status, testcase_num)
+	if status == 'CE':
+		return
 
 	# submit
 	submit_flag = 1
-	if status == 'WA':
+	if status != 'AC':
 		submit_flag = 0
 	if args.choose or not testcase_num:
 		submit_flag = query_submit()

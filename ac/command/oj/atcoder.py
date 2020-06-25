@@ -34,10 +34,10 @@ class AtCoder:
 		return problems
 	
 	def download_testcases(self, problem):
-		path = f'data/testcase/atcoder/{problem[1]}/'
-		if os.path.exists(path):
+		test_dir = f'data/testcase/atcoder/{problem[1]}/'
+		if os.path.exists(test_dir):
 			return -1
-		os.makedirs(path)
+		os.makedirs(test_dir)
 
 		res = self.session.get(f'https://atcoder.jp/contests/{problem[1]}/tasks/{problem[2]}?lang=ja')
 		if res.status_code != 200:
@@ -51,10 +51,10 @@ class AtCoder:
 			input_data = tree.xpath(f'//h3[text()="入力例 {cnt}"]')[0].getnext().text
 			output_data = tree.xpath(f'//h3[text()="出力例 {cnt}"]')[0].getnext().text
 
-			with open(path+f'{problem[2]}_{cnt}.input', mode='w') as f:
+			with open(test_dir + f'{problem[2]}_{cnt}.input', mode='w') as f:
 				for line in input_data:
 					f.write(line)
-			with open(path+f'{problem[2]}_{cnt}.output', mode='w') as f:
+			with open(test_dir + f'{problem[2]}_{cnt}.output', mode='w') as f:
 				for line in output_data:
 					f.write(line)
 

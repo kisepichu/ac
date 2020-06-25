@@ -85,6 +85,7 @@
     <Content Include="command\__pycache__\submit.cpython-36.pyc" />
     <Content Include="command\__pycache__\submit.cpython-37.pyc" />
     <Content Include="command\__pycache__\test.cpython-37.pyc" />
+    <Content Include="config.yml" />
     <Content Include="data\contest\problems.csv" />
     <Content Include="data\testcase\atcoder\.gitkeep" />
     <Content Include="data\testcase\atcoder\abc171\abc171_a_1.input" />
