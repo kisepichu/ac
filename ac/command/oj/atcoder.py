@@ -1,4 +1,4 @@
-﻿# coding: utf-8
+# coding: utf-8
 
 import requests
 import re
@@ -30,7 +30,10 @@ class AtCoder:
 	def get_problems(self, contest_id):
 		res = self.session.get(f'https://atcoder.jp/contests/{contest_id}/submit')
 		tree = lxml.html.fromstring(res.text)
-		problems = tree.xpath('//*[@id="select-task"]/option/@value')
+		problem_ids = tree.xpath('//*[@id="select-task"]/option/@value')
+		problems = []
+		for problem_id in problem_ids:
+			problems.append({'atcoder', contest_id, problem_id})
 		return problems
 	
 	def download_testcases(self, problem):

@@ -34,6 +34,9 @@
     <Compile Include="command\init.py" />
     <Compile Include="command\make_snippet.py" />
     <Compile Include="command\oj\atcoder.py" />
+    <Compile Include="command\oj\atcoderproblems.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="command\oj\codeforces.py" />
     <Compile Include="command\submit.py" />
     <Compile Include="command\sub\colors.py" />

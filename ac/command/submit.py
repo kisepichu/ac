@@ -1,4 +1,4 @@
-﻿# coding: utf-8
+# coding: utf-8
 
 import requests
 import os
@@ -15,8 +15,6 @@ from command.oj.codeforces import CodeForces
 def submit(args, config):
 	# print('args: ', args)
 	# print('config: ', config)
-
-	devnull = open(os.devnull, 'w')
 	
 	problem_number = ord(args.problem_char) - ord('a')
 
