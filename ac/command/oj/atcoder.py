@@ -6,6 +6,7 @@ import urllib
 import os
 import sys
 import lxml.html
+import time
 from datetime import datetime
 
 class AtCoder:
@@ -28,10 +29,18 @@ class AtCoder:
 		self.session.post(self.LOGIN_URL, data=payload)
 		return
 
-	def get_statement_a(self, contest_id):
+	def get_statement_a(self, contest_id, f5=0):
 		res = self.session.get(f'https://atcoder.jp/contests/{contest_id}/tasks_print?lang=ja')
+		if f5:
+			while res.status_code != 200:
+				print(res.status_code)
+				time.sleep(0.5)
+				res = self.session.get(f'https://atcoder.jp/contests/{contest_id}/tasks_print?lang=ja')
+		else:
+			if res.status_code != 200:
+				raise Exception(f'status_code {res.status_code}: https://atcoder.jp/contests/{contest_id}/tasks_print?lang=ja')
+		
 		tree = lxml.html.fromstring(res.text)
-
 		statementx=tree.xpath(f'/html/body/div[@id="main-div"]/div[@id="main-container"]/div[@class="row"]/div[@class="col-sm-12"][1]/div[@id="task-statement"]/span[@class="lang"]/span[@class="lang-ja"]/div[@class="part"][1]/section')
 		inputx=tree.xpath(f'/html/body/div[@id="main-div"]/div[@id="main-container"]/div[@class="row"]/div[@class="col-sm-12"][1]/div[@id="task-statement"]/span[@class="lang"]/span[@class="lang-ja"]/div[@class="io-style"]/div[@class="part"][1]/section')
 		insamplex=tree.xpath(f'/html/body/div[@id=\'main-div\']/div[@id=\'main-container\']/div[@class=\'row\']/div[@class=\'col-sm-12\']/div[@id=\'task-statement\']/span[@class=\'lang\']/span[@class=\'lang-ja\']/div[@class=\'part\'][3]/section')
@@ -44,8 +53,17 @@ class AtCoder:
 		return statement
 
 
-	def get_problems(self, contest_id):
+	def get_problems(self, contest_id, f5=0):
 		res = self.session.get(f'https://atcoder.jp/contests/{contest_id}/submit')
+		if f5:
+			while res.status_code != 200:
+				print(res.status_code)
+				time.sleep(0.5)
+				res = self.session.get(f'https://atcoder.jp/contests/{contest_id}/submit')
+		else:
+			if res.status_code != 200:
+				raise Exception(f'status_code {res.status_code}: https://atcoder.jp/contests/{contest_id}/submit')
+		
 		tree = lxml.html.fromstring(res.text)
 		problem_ids = tree.xpath('//*[@id="select-task"]/option/@value')
 		problems = []
@@ -57,7 +75,7 @@ class AtCoder:
 		res = self.session.get(f'https://atcoder.jp/contests/{contest_id}')
 		tree = lxml.html.fromstring(res.text)
 		start_str = tree.xpath('//*[@class="fixtime fixtime-full"]')[0].text_content()
-		# start_str = '2020-6-25 23:52:00+0900'
+		start_str = '2020-6-27 2:37:00+0900'
 		return datetime.strptime(start_str[:-5], '%Y-%m-%d %H:%M:%S')
 
 	def get_contest_id(self, urlpath):

@@ -10,11 +10,19 @@ from command.sub.scripts import *
 
 def start(args, config, oj, contest_id):
 	if args.show_a:
-		print_statement(oj.get_statement_a(contest_id))
+		print_statement(oj.get_statement_a(contest_id, 1))
+	
 	url = urlparse(args.contest_url)
-	problems = oj.get_problems(contest_id)
-	for problem in problems:
-		oj.download_testcases(problem)
+	problems = oj.get_problems(contest_id, 1)
+	
+	if args.download:
+		for problem in problems:
+			oj.download_testcases(problem)
+	
+	with open('data/contest/problems.csv', mode='w') as f:
+		for problem in problems:
+			f.write(','.join(problem)+'\n')
+
 	return
 
 def init(args, config):
@@ -33,6 +41,7 @@ def init(args, config):
 		raise Exception('not a contest url: ', args.contest_url)
 
 	start_time = oj.get_start_time(contest_id)
+	print(f'start time: {start_time}')
 	
 	sc = sched.scheduler(time.time, time.sleep)
 	for i in range(1,31):
