@@ -250,88 +250,128 @@ class Transformer:
 		if deb>=3: print("  "*d,tree.data)
 		l, source = self.transform(tree.children[0], d, data)
 		r, add = self.transform(tree.children[1], d, data)
-		print(l,r)
 		return (l or r), source+"||"+add
 
 	def lxor(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return int((not not l) ^ (not not r)), "(!!("+source+"))^(!!("+add+"))"
 
 	def land(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return (l and r), source+"&&"+add
 
 	def bor(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return (l | r), source+"|"+add
 
 	def bxor(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return (l ^ r), source+"^"+add
 
 	def band(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return (l & r), source+"&"+add
 
 	def eq(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return int(l == r), source+"=="+add
 
 	def neq(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return int(l != r), source+"!="+add
 
 	def lt(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return int(l < r), source+"<"+add
 
 	def gt(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return int(l > r), source+">"+add
 
 	def leq(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return int(l <= r), source+"<="+add
 
 	def geq(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return int(l >= r), source+">="+add
 
 	def ls(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return (l << r), source+"<<"+add
 
 	def rs(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return (l >> r), source+">>"+add
 
 	def plus(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return (l + r), source+"+"+add
 
 	def minus(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return (l - r), source+"-"+add
 
 	def times(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return (l * r), source+"*"+add
 
 	def div(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return (l / r), source+"/"+add
+
+	def divv(self, tree, d, data):
+		if deb>=3: print("  "*d,tree.data)
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return (l // r), source+"/"+add
 
 	def mod(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return (l % r), source+"%"+add
 
 	def pow(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		return
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		return (l ** r), "pow("+source+", "+add+")"
 
-	def test(self, tree, d, data):
-		if deb>=3: print("  "*d,tree.data)
-		return
 
 	def value(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)

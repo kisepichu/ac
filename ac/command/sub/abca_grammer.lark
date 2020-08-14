@@ -91,9 +91,11 @@ minus: expr10 "-" expr11
 expr11: expr12
       | times
       | div
+      | divv
       | mod
 times: expr11 "*" expr12
 div: expr11 "/" expr12
+divv: expr11 "//" expr12
 mod: expr11 "%" expr12
 
 expr12: expr13
