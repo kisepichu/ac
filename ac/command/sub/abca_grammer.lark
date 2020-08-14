@@ -1,4 +1,4 @@
-?statement: (command | value) ("," statement)*
+?statement: (command | expr) ("," statement)*
 
 command: command_in value value value
        | command_out value
@@ -8,10 +8,93 @@ command_in: "i"
 command_out: "o"
 command_exit: "exit"
 
-?value: number
+expr: expr1
+    | decl
+    | pluseq
+    | minuseq
+    | timeseq
+    | diveq
+    | poweq
+    | modeq
+decl: symbol ":=" expr
+pluseq: expr1 "+=" expr
+minuseq: expr1 "-=" expr
+timeseq: expr1 "*=" expr
+diveq: expr1 "/=" expr
+poweq: expr1 "**=" expr
+modeq: expr1 "%=" expr
+
+expr1: expr2
+     | or
+or: expr1 "||" expr2
+
+expr2: expr3
+     | xor
+xor: expr2 "^^" expr3
+
+expr3: expr4
+     | and
+and: expr3 "&&" expr4
+
+expr4: expr5
+     | bor
+bor: expr4 "|" expr5
+
+expr5: expr6
+     | bxor
+bxor: expr5 "^" expr6
+
+expr6: expr7
+     | band
+band: expr6 "&" expr7
+
+expr7: expr8
+     | eq
+     | neq
+eq: expr7 "==" expr8
+neq: expr7 "!=" expr8
+
+expr8: expr9
+     | lt
+     | gt
+     | leq
+     | geq
+lt: expr8 "<" expr9
+gt: expr8 ">" expr9
+leq: expr8 "<=" expr9
+geq: expr8 ">=" expr9
+
+expr9: expr10
+     | ls
+     | rs
+ls: expr9 "<<" expr10
+rs: expr9 ">>" expr10
+
+expr10: expr11
+      | plus
+      | minus
+plus: expr10 "+" expr11
+minus: expr10 "-" expr11
+
+expr11: expr12
+      | times
+      | div
+      | mod
+times: expr11 "*" expr12
+div: expr11 "/" expr12
+mod: expr11 "%" expr12
+
+expr12: expr13
+      | pow
+pow: expr12 "**" expr13
+
+expr13: value
+
+value: number
      | string
      | "[" [value ("," value)*] "]"
-
+     | priority
+?priority: "(" expr ")"
 
 symbol: WORD
 number: SIGNED_NUMBER

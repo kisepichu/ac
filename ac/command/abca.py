@@ -5,8 +5,9 @@ import readline
 from lark import Lark
 
 class Transformer:
-	def __default__(self, tree, env):
-		raise
+	def __default__(self, tree, env, d):
+		print("unimplemented")
+		exit(0)
 	
 	def transform(self, tree, source, d):
 		f = getattr(self, tree.data, self.__default__)
@@ -57,7 +58,7 @@ def abca(args, config):
 	parser = Lark(rule, start='statement', parser='lalr')
 	source = ""
 	while 1:
-		statement = input("> ")
+		statement = input(">> ")
 		try:
 			tree = parser.parse(statement)
 		except:
