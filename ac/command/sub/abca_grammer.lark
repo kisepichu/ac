@@ -17,8 +17,8 @@ expr: expr1
     | poweq
     | modeq
 decl: symbol ":=" expr
-pluseq: expr1 "+=" expr
-minuseq: expr1 "-=" expr
+pluseq: expr1 "pluseq" expr
+minuseq: expr1 "minuseq" expr
 timeseq: expr1 "*=" expr
 diveq: expr1 "/=" expr
 poweq: expr1 "**=" expr
@@ -93,15 +93,13 @@ expr13: value
 value: number
      | string
      | "[" [value ("," value)*] "]"
-     | priority
-?priority: "(" expr ")"
+     | "(" expr ")"
 
 symbol: WORD
-number: SIGNED_NUMBER
+number: /-?\d+(\.\d)?([eE][+-]?\d+)?/
 string: ESCAPED_STRING
 
 %import common.WORD
-%import common.SIGNED_NUMBER
 %import common.ESCAPED_STRING
 %import common.WS
 %ignore WS

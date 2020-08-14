@@ -7,7 +7,7 @@ from lark import Lark
 class Transformer:
 	def __default__(self, tree, env, d):
 		print("unimplemented")
-		exit(0)
+		#exit(0)
 	
 	def transform(self, tree, source, d):
 		f = getattr(self, tree.data, self.__default__)
@@ -64,6 +64,7 @@ def abca(args, config):
 		except:
 			print("failed to parse")
 			continue
+		print(tree.pretty())
 		res = Transformer().transform(tree, source, 0)
 		if res == -1:
 			break
