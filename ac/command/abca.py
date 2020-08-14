@@ -36,9 +36,10 @@ class Transformer:
 
 	def statement(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, d+1, data)
-		return
+		r, source = self.transform(tree.children[0], d+1, data)
+		if len(tree.children)>1:
+			r, add = self.transform(tree.children[1], d, data)
+		return r, source+';'
 
 	def command(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
@@ -245,28 +246,30 @@ class Transformer:
 		data[s] >>= r
 		return data[s], source
 
-	def _or(self, tree, d, data):
+	def lor(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
+		l, source = self.transform(tree.children[0], d, data)
+		r, add = self.transform(tree.children[1], d, data)
+		print(l,r)
+		return (l or r), source+"||"+add
 
-		return
-
-	def _xor(self, tree, d, data):
-		if deb>=3: print("  "*d,tree.data)
-		return
-
-	def _and(self, tree, d, data):
+	def lxor(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
 		return
 
-	def _bor(self, tree, d, data):
+	def land(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
 		return
 
-	def _bxor(self, tree, d, data):
+	def bor(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
 		return
 
-	def _band(self, tree, d, data):
+	def bxor(self, tree, d, data):
+		if deb>=3: print("  "*d,tree.data)
+		return
+
+	def band(self, tree, d, data):
 		if deb>=3: print("  "*d,tree.data)
 		return
 
@@ -394,7 +397,7 @@ def abca(args, config):
 			res[i], add = Transformer().transform(tree, 0, gdata[i])			
 
 		if add != "":
-			source += add+";\n"
+			source += add+"\n"
 
 		if deb >= 2:
 			print("source:",source,end='')

@@ -1,4 +1,4 @@
-?statement: (command | expr) ("," statement)*
+statement: (command | expr) ["," statement]
 
 command: command_in value value value
        | command_out value
@@ -37,28 +37,28 @@ lseq: symbol "<<=" expr
 rseq: symbol ">>=" expr
 
 expr1: expr2
-     | _or
-_or: expr1 "||" expr2
+     | lor
+lor: expr1 "||" expr2
 
 expr2: expr3
-     | _xor
-_xor: expr2 "^^" expr3
+     | lxor
+lxor: expr2 "^^" expr3
 
 expr3: expr4
-     | _and
-_and: expr3 "&&" expr4
+     | land
+land: expr3 "&&" expr4
 
 expr4: expr5
-     | _bor
-_bor: expr4 "|" expr5
+     | bor
+bor: expr4 "|" expr5
 
 expr5: expr6
-     | _bxor
-_bxor: expr5 "^" expr6
+     | bxor
+bxor: expr5 "^" expr6
 
 expr6: expr7
-     | _band
-_band: expr6 "&" expr7
+     | band
+band: expr6 "&" expr7
 
 expr7: expr8
      | eq
