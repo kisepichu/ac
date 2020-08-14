@@ -46,7 +46,7 @@ class AtCoder:
 		insamplex=tree.xpath(f'/html/body/div[@id=\'main-div\']/div[@id=\'main-container\']/div[@class=\'row\']/div[@class=\'col-sm-12\']/div[@id=\'task-statement\']/span[@class=\'lang\']/span[@class=\'lang-ja\']/div[@class=\'part\'][3]/section')
 		outsamplex=tree.xpath(f'/html/body/div[@id=\'main-div\']/div[@id=\'main-container\']/div[@class=\'row\']/div[@class=\'col-sm-12\']/div[@id=\'task-statement\']/span[@class=\'lang\']/span[@class=\'lang-ja\']/div[@class=\'part\'][4]/section')
 		
-		statement=statementx[0].text_content()[6:]
+		statement=statementx[0].text_content()[5:]
 		statement+="in.\n"+inputx[0][2].text_content()
 		statement+="ex.\n"+insamplex[0][1].text_content()+"  ->  "+outsamplex[0][1].text_content()
 		

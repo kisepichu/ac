@@ -29,6 +29,9 @@
     <Compile Include="ac.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="command\abca.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="command\clear.py" />
     <Compile Include="command\copy.py" />
     <Compile Include="command\init.py" />

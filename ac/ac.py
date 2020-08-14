@@ -12,12 +12,13 @@ from command.submit import *
 from command.copy import *
 from command.clear import *
 from command.make_snippet import *
+from command.abca import *
 
 def main():
 	with open('config.yml', encoding="utf-8_sig", mode='r') as f:
 		config = yaml.load(f, Loader=yaml.SafeLoader)
 
-	parser = argparse.ArgumentParser(description='perf +100')
+	parser = argparse.ArgumentParser(description='')
 	subparsers = parser.add_subparsers()
 
 	# init
@@ -28,7 +29,7 @@ def main():
 	parser_init.set_defaults(handler=init)
 
 	# submit
-	parser_submit = subparsers.add_parser('submit', help='see `submit -h`')
+	parser_submit = subparsers.add_parser('submit')
 	parser_submit.add_argument('-c', '--choose', action='store_true', help='choose whether to submit')
 	parser_submit.add_argument('-f', '--force', action='store_true', help='')
 	parser_submit.add_argument('problem_char', help='a-z')
@@ -46,6 +47,12 @@ def main():
 	parser_make_snippet = subparsers.add_parser('make-snippet')
 	parser_make_snippet.set_defaults(handler=make_snippet)
 	
+	# abca
+	parser_abca = subparsers.add_parser('abca')
+	parser_abca.add_argument('-i', '--input')
+	parser_abca.add_argument('-p', '--problem_char', help='a-z')
+	parser_abca.set_defaults(handler=abca)
+
 	args = parser.parse_args()
 	if hasattr(args, 'handler'):
 		args.handler(args,config)

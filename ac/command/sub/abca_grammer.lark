@@ -1,0 +1,24 @@
+?statement: (command | value) ("," statement)*
+
+command: command_in value value value
+       | command_out value
+       | command_exit
+
+command_in: "i"
+command_out: "o"
+command_exit: "exit"
+
+?value: number
+     | string
+     | "[" [value ("," value)*] "]"
+
+
+symbol: WORD
+number: SIGNED_NUMBER
+string: ESCAPED_STRING
+
+%import common.WORD
+%import common.SIGNED_NUMBER
+%import common.ESCAPED_STRING
+%import common.WS
+%ignore WS
