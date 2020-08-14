@@ -12,6 +12,7 @@ command_exit: "exit"
 
 expr: expr1
     | decl
+    | assign
     | tern
     | pluseq
     | minuseq
@@ -22,15 +23,16 @@ expr: expr1
     | lseq
     | rseq
 decl: symbol ":=" expr
+assign: symbol "=" expr
 tern: expr1 "?" expr ":" expr
-pluseq: expr1 "+=" expr
-minuseq: expr1 "-=" expr
-timeseq: expr1 "*=" expr
-diveq: expr1 "/=" expr
-poweq: expr1 "**=" expr
-modeq: expr1 "%=" expr
-lseq: expr1 "<<=" expr
-rseq: expr1 ">>=" expr
+pluseq: symbol "+=" expr
+minuseq: symbol "-=" expr
+timeseq: symbol "*=" expr
+diveq: symbol "/=" expr
+poweq: symbol "**=" expr
+modeq: symbol "%=" expr
+lseq: symbol "<<=" expr
+rseq: symbol ">>=" expr
 
 expr1: expr2
      | _or
@@ -101,6 +103,7 @@ expr13: value
 value: number
      | string
      | "[" [value ("," value)*] "]"
+     | symbol
      | "(" expr ")"
 
 symbol: WORD
