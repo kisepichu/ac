@@ -2,10 +2,12 @@
 
 command: command_in value value value
        | command_out value
+       | command_undo
        | command_exit
 
 command_in: "i"
 command_out: "o"
+command_undo: "u"
 command_exit: "exit"
 
 expr: expr1
@@ -16,37 +18,41 @@ expr: expr1
     | diveq
     | poweq
     | modeq
+    | lseq
+    | rseq
 decl: symbol ":=" expr
-pluseq: expr1 "pluseq" expr
-minuseq: expr1 "minuseq" expr
+pluseq: expr1 "+=" expr
+minuseq: expr1 "-=" expr
 timeseq: expr1 "*=" expr
 diveq: expr1 "/=" expr
 poweq: expr1 "**=" expr
 modeq: expr1 "%=" expr
+lseq: expr1 "<<=" expr
+rseq: expr1 ">>=" expr
 
 expr1: expr2
-     | or
-or: expr1 "||" expr2
+     | _or
+_or: expr1 "||" expr2
 
 expr2: expr3
-     | xor
-xor: expr2 "^^" expr3
+     | _xor
+_xor: expr2 "^^" expr3
 
 expr3: expr4
-     | and
-and: expr3 "&&" expr4
+     | _and
+_and: expr3 "&&" expr4
 
 expr4: expr5
-     | bor
-bor: expr4 "|" expr5
+     | _bor
+_bor: expr4 "|" expr5
 
 expr5: expr6
-     | bxor
-bxor: expr5 "^" expr6
+     | _bxor
+_bxor: expr5 "^" expr6
 
 expr6: expr7
-     | band
-band: expr6 "&" expr7
+     | _band
+_band: expr6 "&" expr7
 
 expr7: expr8
      | eq
