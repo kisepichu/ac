@@ -104,11 +104,12 @@ expr13: value
 
 value: number
      | string
-     | "[" [value ("," value)*] "]"
+     | list
      | symbol
      | priority
 number: /-?\d+(\.\d)?([eE][+-]?\d+)?/
 string: ESCAPED_STRING
+list: "[" [value ("," value)*] "]"
 symbol: WORD
 priority: "(" expr ")"
 
