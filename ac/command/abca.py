@@ -152,27 +152,66 @@ class Transformer:
 
 	def timeseq(self, tree, d, data):
 		print("  "*d,tree.data)
-		return
+		s = tree.children[0].children[0].value
+		source = s+" *= "
+		r, add = self.transform(tree.children[1], d, data)
+		source += add
+		data[s] *= r
+		return data[s], source
 
 	def diveq(self, tree, d, data):
 		print("  "*d,tree.data)
-		return
+		s = tree.children[0].children[0].value
+		source = s+" /= "
+		r, add = self.transform(tree.children[1], d, data)
+		source += add
+		data[s] /= r
+		return data[s], source
+
+	def divveq(self, tree, d, data):
+		print("  "*d,tree.data)
+		s = tree.children[0].children[0].value
+		source = s+" /= "
+		r, add = self.transform(tree.children[1], d, data)
+		source += add
+		data[s] //= r
+		return data[s], source
 
 	def poweq(self, tree, d, data):
 		print("  "*d,tree.data)
-		return
+		s = tree.children[0].children[0].value
+		source = s+" = pow("+s+", "
+		r, add = self.transform(tree.children[1], d, data)
+		source += add+")"
+		data[s] **= r
+		return data[s], source
 
 	def modeq(self, tree, d, data):
 		print("  "*d,tree.data)
-		return
+		s = tree.children[0].children[0].value
+		source = s+" %= "
+		r, add = self.transform(tree.children[1], d, data)
+		source += add
+		data[s] %= r
+		return data[s], source
 
 	def lseq(self, tree, d, data):
 		print("  "*d,tree.data)
-		return
+		s = tree.children[0].children[0].value
+		source = s+" <<= "
+		r, add = self.transform(tree.children[1], d, data)
+		source += add
+		data[s] <<= r
+		return data[s], source
 
 	def rseq(self, tree, d, data):
 		print("  "*d,tree.data)
-		return
+		s = tree.children[0].children[0].value
+		source = s+" >>= "
+		r, add = self.transform(tree.children[1], d, data)
+		source += add
+		data[s] >>= r
+		return data[s], source
 
 	def _or(self, tree, d, data):
 		print("  "*d,tree.data)
@@ -279,6 +318,13 @@ class Transformer:
 		else:
 			print("undefined")
 			return 0, ""
+
+	def priority(self, tree, d, data):
+		print("  "*d,tree.data)
+		source = "("
+		m, add = self.transform(tree.children[0], d+1, data)
+		source += add+")"
+		return m, source
 
 
 def abca(args, config):

@@ -18,6 +18,7 @@ expr: expr1
     | minuseq
     | timeseq
     | diveq
+    | divveq
     | poweq
     | modeq
     | lseq
@@ -29,6 +30,7 @@ pluseq: symbol "+=" expr
 minuseq: symbol "-=" expr
 timeseq: symbol "*=" expr
 diveq: symbol "/=" expr
+divveq: symbol "//=" expr
 poweq: symbol "**=" expr
 modeq: symbol "%=" expr
 lseq: symbol "<<=" expr
@@ -104,11 +106,12 @@ value: number
      | string
      | "[" [value ("," value)*] "]"
      | symbol
-     | "(" expr ")"
-
-symbol: WORD
+     | priority
 number: /-?\d+(\.\d)?([eE][+-]?\d+)?/
 string: ESCAPED_STRING
+symbol: WORD
+priority: "(" expr ")"
+
 
 %import common.WORD
 %import common.ESCAPED_STRING
