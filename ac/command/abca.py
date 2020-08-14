@@ -5,256 +5,234 @@ import readline
 from lark import Lark
 
 class Transformer:
-	def __default__(self, tree, env, d):
+	def __default__(self, tree, env, d, data):
 		print("unimplemented")
 	
-	def transform(self, tree, source, d):
+	def transform(self, tree, source, d, data):
 		f = getattr(self, tree.data, self.__default__)
-		return f(tree, source, d)
+		return f(tree, source, d, data)
 
-	def statement(self, tree, source, d):
+	def statement(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		for e in tree.children:
-			self.transform(e, source, d+1)
+			self.transform(e, source, d+1, data)
 		return
 
-	def command(self, tree, source, d):
+	def command(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		f = getattr(self, tree.children[0].data, self.__default__)
-		return f(source, tree.children[1:], d)
+		return f(source, tree.children[1:], d, data)
 
-	def command_in(self, source, param, d):
+	def command_in(self, source, param, d, data):
 		print("  "*d+"input")
 		return
 
-	def command_out(self, source, param, d):
-		print("  "*d+"output")
-		return
+	def command_out(self, source, param, d, data):
+		return self.transform(param[0], source, d+1, data)
 
-	def command_undo(self, source, param, d):
+	def command_undo(self, source, param, d, data):
 		print("  "*d+"undo")
 		return
 
-	def command_exit(self, source, param, d):
+	def command_exit(self, source, param, d, data):
 		print("  "*d+"exit")
-		return -1
+		exit(0)
 
-	def expr(self, tree, source, d):
+	def expr(self, tree, source, d, data):
 		# print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d)
-		return
+		return self.transform(tree.children[0], source, d, data)
 
-	def expr1(self, tree, source, d):
+	def expr1(self, tree, source, d, data):
 		# print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d)
-		return
+		return self.transform(tree.children[0], source, d, data)
 
-	def expr2(self, tree, source, d):
+	def expr2(self, tree, source, d, data):
 		# print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d)
-		return
+		return self.transform(tree.children[0], source, d, data)
 
-	def expr3(self, tree, source, d):
+	def expr3(self, tree, source, d, data):
 		# print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d)
-		return
+		return self.transform(tree.children[0], source, d, data)
 
-	def expr4(self, tree, source, d):
+	def expr4(self, tree, source, d, data):
 		# print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d)
-		return
+		return self.transform(tree.children[0], source, d, data)
 
-	def expr5(self, tree, source, d):
+	def expr5(self, tree, source, d, data):
 		# print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d)
-		return
+		return self.transform(tree.children[0], source, d, data)
 
-	def expr6(self, tree, source, d):
+	def expr6(self, tree, source, d, data):
 		# print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d)
-		return
+		return self.transform(tree.children[0], source, d, data)
 
-	def expr7(self, tree, source, d):
+	def expr7(self, tree, source, d, data):
 		# print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d)
-		return
+		return self.transform(tree.children[0], source, d, data)
 
-	def expr8(self, tree, source, d):
+	def expr8(self, tree, source, d, data):
 		# print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d)
-		return
+		return self.transform(tree.children[0], source, d, data)
 
-	def expr9(self, tree, source, d):
+	def expr9(self, tree, source, d, data):
 		# print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d)
-		return
+		return self.transform(tree.children[0], source, d, data)
 
-	def expr10(self, tree, source, d):
+	def expr10(self, tree, source, d, data):
 		# print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d)
-		return
+		return self.transform(tree.children[0], source, d, data)
 
-	def expr11(self, tree, source, d):
+	def expr11(self, tree, source, d, data):
 		# print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d)
-		return
+		return self.transform(tree.children[0], source, d, data)
 
-	def expr12(self, tree, source, d):
+	def expr12(self, tree, source, d, data):
 		# print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d)
-		return
+		return self.transform(tree.children[0], source, d, data)
 
-	def expr13(self, tree, source, d):
+	def expr13(self, tree, source, d, data):
 		# print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d)
-		return
+		return self.transform(tree.children[0], source, d, data)
+
 	
-
-	def decl(self, tree, source, d):
+	def decl(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def pluseq(self, tree, source, d):
+	def tern(self, tree, source, d, data):
+		print("  "*d,tree.data)
+		l = self.transform(tree.children[0], source, d, data)
+		m = self.transform(tree.children[1], source, d, data)
+		r = self.transform(tree.children[2], source, d, data)
+		print(l)
+		return m if int(l) else r
+
+	def pluseq(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def minuseq(self, tree, source, d):
+	def minuseq(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def timeseq(self, tree, source, d):
+	def timeseq(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def diveq(self, tree, source, d):
+	def diveq(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def poweq(self, tree, source, d):
+	def poweq(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def modeq(self, tree, source, d):
+	def modeq(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def lseq(self, tree, source, d):
+	def lseq(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def rseq(self, tree, source, d):
+	def rseq(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def _or(self, tree, source, d):
+	def _or(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def _xor(self, tree, source, d):
+	def _xor(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def _and(self, tree, source, d):
+	def _and(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def _bor(self, tree, source, d):
+	def _bor(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def _bxor(self, tree, source, d):
+	def _bxor(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def _band(self, tree, source, d):
+	def _band(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def eq(self, tree, source, d):
+	def eq(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def neq(self, tree, source, d):
+	def neq(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def lt(self, tree, source, d):
+	def lt(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def gt(self, tree, source, d):
+	def gt(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def leq(self, tree, source, d):
+	def leq(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def geq(self, tree, source, d):
+	def geq(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def ls(self, tree, source, d):
+	def ls(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def rs(self, tree, source, d):
+	def rs(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def plus(self, tree, source, d):
+	def plus(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def minus(self, tree, source, d):
+	def minus(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def times(self, tree, source, d):
+	def times(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def div(self, tree, source, d):
+	def div(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def mod(self, tree, source, d):
+	def mod(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def pow(self, tree, source, d):
+	def pow(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def test(self, tree, source, d):
+	def test(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
-	def value(self, tree, source, d):
+	def value(self, tree, source, d, data):
 		print("  "*d,tree.data)
-		for e in tree.children:
-			self.transform(e, source, d+1)
-		return
+		#for e in tree.children:
+		return self.transform(tree.children[0], source, d+1, data)
 
-	def number(self, tree, source, d):
+	def number(self, tree, source, d, data):
 		print("  "*d,tree.data)
-		return
+		return tree.children[0].value
 
-	def string(self, tree, source, d):
+	def string(self, tree, source, d, data):
 		print("  "*d,tree.data)
 		return
 
@@ -263,6 +241,7 @@ def abca(args, config):
 	rule = open('command/sub/abca_grammer.lark').read()
 	parser = Lark(rule, start='statement', parser='lalr')
 	source = ""
+	data = {}
 	while 1:
 		statement = input(">> ")
 		try:
@@ -270,8 +249,7 @@ def abca(args, config):
 		except:
 			print("failed to parse")
 			continue
-		# print(tree.pretty())
-		res = Transformer().transform(tree, source, 0)
-		if res == -1:
-			break
+
+		res = Transformer().transform(tree, source, 0, data)
+		print(res)
 	return

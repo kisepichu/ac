@@ -12,6 +12,7 @@ command_exit: "exit"
 
 expr: expr1
     | decl
+    | tern
     | pluseq
     | minuseq
     | timeseq
@@ -21,6 +22,7 @@ expr: expr1
     | lseq
     | rseq
 decl: symbol ":=" expr
+tern: expr1 "?" expr ":" expr
 pluseq: expr1 "+=" expr
 minuseq: expr1 "-=" expr
 timeseq: expr1 "*=" expr
