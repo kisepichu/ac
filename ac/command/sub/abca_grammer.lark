@@ -1,6 +1,6 @@
 statement: (command | expr) ["," statement]
 
-command: command_in value value value
+command: command_in ilist illist illist
        | command_out value
        | command_undo
        | command_exit
@@ -9,6 +9,9 @@ command_in: "i"
 command_out: "o"
 command_undo: "u"
 command_exit: "exit"
+illist: "[" [ilist ("," ilist)*] "]"
+ilist: "[" [istr ("," istr)*] "]"
+istr: number | symbol
 
 expr: expr1
     | decl
@@ -111,12 +114,10 @@ value: number
      | priority
 number: /-?\d+(\.\d)?([eE][+-]?\d+)?/
 string: ESCAPED_STRING
-list: "[" [value ("," value)*] "]"
-symbol: WORD
+list: "[" [expr ("," expr)*] "]"
+symbol: /[a-zA-Z0-9_]+/
 priority: "(" expr ")"
 
-
-%import common.WORD
 %import common.ESCAPED_STRING
 %import common.WS
 %ignore WS
