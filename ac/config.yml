@@ -1,6 +1,9 @@
-﻿source_path: '../example.cpp'
+source_path: '../example.cpp'
 formatted_path: 'data/tmp/formatted.cpp'
+abca_path: 'data/tmp/made.cpp'
 executable_path: '../a.out'
 language_id: 4003
-compile: 'g++ ../example.cpp --exec-charset=cp932 --input-charset=utf-8 -O2 -o ../a.out'
+compile: 'g++ {{source}} --exec-charset=cp932 --input-charset=utf-8 -O2 -o ../a.out'
 execute: '../a.out'
+abca_header: '#include "bits/stdc++.h"\nusing namespace std;\nusing lint = int64_t;\nint main(){\n'
+abca_footer: '}'

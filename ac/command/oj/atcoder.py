@@ -119,7 +119,7 @@ class AtCoder:
 			'sourceCode':source,
 			'csrf_token':self.csrf_token
 		}
-		print(payload)
+		# print(payload)
 		return self.session.post(f'https://atcoder.jp/contests/{problem[1]}/submit', data=payload).content
 
 

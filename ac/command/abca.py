@@ -3,7 +3,9 @@
 import os
 import readline
 import copy
+import argparse
 from lark import Lark
+from command.submit import submit
 
 deb = 1
 samplenum = 1
@@ -14,20 +16,23 @@ def _command_in(names, inputs, outputs):
 	global gdata
 	global samplenum
 	global outputnum
+	source = ""
 	for i in range(1,samplenum):
 		gdata.append(copy.deepcopy(gdata[i-1]))
 	for i in range(samplenum):
 		for j in range(len(names)):
+			if not i: source += "string "+names[j].upper()+"; cin >> "+names[j].upper()+";";
 			try:
 				gdata[i][names[j].lower()] = int(inputs[i][j])
 				if deb >= 2: print("int")
+				if not i: source += "\nlint "+names[j].lower()+" = stoll("+names[j].upper()+")"
 			except:
 				if deb >= 2: print("string")
 			gdata[i][names[j].upper()] = str(inputs[i][j])
 		for j in range(len(outputs[i])):
 			gdata[i]["out_"+str(j)] = str(outputs[i][j])
 
-	return
+	return source
 
 
 class Transformer:
@@ -61,8 +66,7 @@ class Transformer:
 		outputs, _ = self.transform(param[2], d+1, data)
 		samplenum = len(inputs)
 		outputnum = len(outputs[0])
-		_command_in(names, inputs, outputs)
-		return 0, ""
+		return 0, _command_in(names, inputs, outputs)
 
 	def command_out(self, param, d, data):
 		print("  "*d+"output")
@@ -496,7 +500,33 @@ def abca(args, config):
 					if str(r[j]) != gdata[i]["out_"+str(j)]: ac = 0;
 				else: ac = 0;
 
-		if ac == 1: print("AC"+source)
+		if ac == 1:
+			source = source.split('\n')
+			out = source[-2:][0]
+			source = source[:-2]
+			sub = ""
+			for line in config['abca_header'].split('\\n'):
+				sub += line + '\n'
+			for line in source:
+				sub += '	'+line+'\n'
+			sub += '	cout << ('+out[:-1]+') << endl;\n'
+			for line in config['abca_footer'].split('\\n'):
+				sub += line + '\n'
+			print(sub)
+			with open(config['abca_path'], mode='w') as f:
+				f.write(sub)
+			option = argparse.Namespace()
+			doption = {
+				"force": 1,
+				"problem_char": args.problem_char,
+				"source_path": config['abca_path'],
+				"problem_char": "a",
+				"no_format": 0
+			};
+			for e in doption.keys():
+				vars(option)[e] = doption[e]
+			submit(option, config)
+			return
 	return
 
 # todo: 入力例をとる user script, 文字列/list アクセス, ラムダ式

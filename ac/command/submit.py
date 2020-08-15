@@ -29,12 +29,21 @@ def submit(args, config):
 	else:
 		raise Exception(f'no such online judge: {oj_name}')
 	
+	if args.source_path == '':
+		source_path = config['source_path']
+	else:
+		source_path = args.source_path
+
 	# format
-	with open(config['source_path'], encoding="utf-8_sig", mode='r') as f:
+	with open(source_path, encoding="utf-8_sig", mode='r') as f:
 		source = f.read()
-	with open(config['formatted_path'], mode='w') as f:
-		source = format(source)
-		f.write(source)
+	if not args.no_format:
+		with open(source_path, encoding="utf-8_sig", mode='r') as f:
+			source = f.read()
+		with open(config['formatted_path'], mode='w') as f:
+			source = format(source)
+			f.write(source)
+		source_path = config['formatted_path']
 	
 	# -f option
 	if args.force:
@@ -48,7 +57,10 @@ def submit(args, config):
 	# compile
 	if os.path.exists(config['executable_path']):
 		os.remove(config['executable_path'])
-	subprocess.run(config['compile'].split())
+	if args.compile != '':
+		subprocess.run(args.compile.replace("{{source}}", source_path).split())
+	else:
+		subprocess.run(config['compile'].replace("{{source}}", source_path).split())
 
 	# test
 	status, testcase_num = test(config, problem)

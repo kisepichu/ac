@@ -32,6 +32,9 @@ def main():
 	parser_submit = subparsers.add_parser('submit')
 	parser_submit.add_argument('-c', '--choose', action='store_true', help='choose whether to submit')
 	parser_submit.add_argument('-f', '--force', action='store_true', help='')
+	parser_submit.add_argument('-p', '--compile', default = '', help='compile command')
+	parser_submit.add_argument('-s', '--source_path', default = '', help='source path')
+	parser_submit.add_argument('-n', '--no_format', action='store_true', help='no format')
 	parser_submit.add_argument('problem_char', help='a-z')
 	parser_submit.set_defaults(handler=submit)
 
