@@ -110,11 +110,13 @@ expr13: value
 value: number
      | string
      | list
+     | choose
      | symbol
      | priority
 number: /-?\d+(\.\d)?([eE][+-]?\d+)?/
 string: ESCAPED_STRING
 list: "[" [expr ("," expr)*] "]"
+choose: symbol "[" expr "]"
 symbol: /[a-zA-Z0-9_]+/
 priority: "(" expr ")"
 

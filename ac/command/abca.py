@@ -163,6 +163,8 @@ class Transformer:
 				source = "lint"
 			elif type(data[s]) == str:
 				source = "string"
+			elif type(data[s]) == list:
+				source = "vector"
 			else:
 				print("unknown type: ", type(data[s]))
 			source += " "+s+" = "+add
@@ -414,13 +416,27 @@ class Transformer:
 	def list(self, tree, d, data):
 		if deb>=3: print("  "*d+tree.data)
 		ret = []
-		source = "["
+		cnt = 0
+		source = "{"
 		for e in tree.children:
 			r, add = self.transform(e, d, data)
 			ret.append(r)
-			source += ","+add
-		source += "]"
+			if cnt: source += ", "
+			source += add
+			cnt += 1
+		source += "}"
 		return ret, source
+
+	def choose(self, tree, d, data):
+		if deb>=3: print("  "*d+tree.data)
+		s = tree.children[0].children[0].value
+		source = s
+		r, add = self.transform(tree.children[1], d+1, data)
+		source += "["+add+"]"
+		if s not in data:
+			print("undefined")
+			return 0, ""
+		return data[s][r], source
 
 	def symbol(self, tree, d, data):
 		if deb>=3: print("  "*d+tree.data)
@@ -474,10 +490,13 @@ def abca(args, config):
 		for i in range(len(res)):
 			for j in range(outputnum):
 				r = res[i]
-				print(type(r))
-				if type(r) != "list": r = [r]
-				if res[i] != gdata[i]["out_"+str(j)]: ac = 0
-		if ac == 1: print("ac, source:"+source)
+				if type(r) != list: r = [r]
+				print(ac)
+				if j<len(r):
+					if str(r[j]) != gdata[i]["out_"+str(j)]: ac = 0;
+				else: ac = 0;
+
+		if ac == 1: print("AC"+source)
 	return
 
 # todo: 入力例をとる user script, 文字列/list アクセス, ラムダ式
