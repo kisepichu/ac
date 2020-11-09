@@ -47,8 +47,6 @@ def submit(args, config):
 	
 	# -f option
 	if args.force:
-		print("force submit, temporary stopped")
-		return
 		oj.submit(problem, config['language_id'], source)
 		print_submitted(1)
 		return

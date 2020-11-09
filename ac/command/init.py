@@ -38,7 +38,7 @@ def init(args, config):
 	else:
 		raise Exception('no such online judge: ' + url.netloc)
 
-	contest_id = oj.get_contest_id(url.path[1:].split('/'))
+	contest_id = oj.get_contest_id(url)
 	if contest_id is None:
 		raise Exception('not a contest url: ', args.contest_url)
 
