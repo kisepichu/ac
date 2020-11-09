@@ -9,7 +9,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 from command.init import *
 from command.submit import *
-from command.copy import *
+from command.cpy import *
 from command.clear import *
 from command.make_snippet import *
 from command.abca import *
@@ -40,7 +40,7 @@ def main():
 
 	# copy
 	parser_copy = subparsers.add_parser('copy')
-	parser_copy.set_defaults(handler=copy)
+	parser_copy.set_defaults(handler=cpy)
 
 	# clear
 	parser_clear = subparsers.add_parser('clear')
@@ -52,7 +52,7 @@ def main():
 	
 	# abca
 	parser_abca = subparsers.add_parser('abca')
-	parser_abca.add_argument('-i', '--input')
+	parser_abca.add_argument('-i', '--input',action='store_false')
 	parser_abca.add_argument('-p', '--problem_char', help='a-z')
 	parser_abca.set_defaults(handler=abca)
 

@@ -4,6 +4,7 @@ import os
 import readline
 import copy
 import argparse
+import pyperclip
 from lark import Lark
 from command.submit import submit
 
@@ -21,11 +22,11 @@ def _command_in(names, inputs, outputs):
 		gdata.append(copy.deepcopy(gdata[i-1]))
 	for i in range(samplenum):
 		for j in range(len(names)):
-			if not i: source += "string "+names[j].upper()+"; cin >> "+names[j].upper()+";";
+			if not i: source += "string "+names[j].upper()+"; cin >> "+names[j].upper()+";\n";
 			try:
 				gdata[i][names[j].lower()] = int(inputs[i][j])
 				if deb >= 2: print("int")
-				if not i: source += "\nlint "+names[j].lower()+" = stoll("+names[j].upper()+")"
+				if not i: source += "lint "+names[j].lower()+" = stoll("+names[j].upper()+");\n"
 			except:
 				if deb >= 2: print("string")
 			gdata[i][names[j].upper()] = str(inputs[i][j])
@@ -470,7 +471,12 @@ def abca(args, config):
 	gdata = [{}]
 
 	while 1:
-		statement = input(">> ")
+		if args.input:
+			print(pyperclip.paste())
+			statement = pyperclip.paste()
+			args.input = False
+		else:
+			statement = input(">> ")
 		try:
 			tree = parser.parse(statement)
 		except:
@@ -491,14 +497,18 @@ def abca(args, config):
 			print("return:",res)
 
 		ac = 1
+		ct = 0
 		for i in range(len(res)):
 			for j in range(outputnum):
+				ct += 1
 				r = res[i]
 				if type(r) != list: r = [r]
 				print(ac)
 				if j<len(r):
 					if str(r[j]) != gdata[i]["out_"+str(j)]: ac = 0;
 				else: ac = 0;
+
+		if not ct: ac = 0
 
 		if ac == 1:
 			source = source.split('\n')

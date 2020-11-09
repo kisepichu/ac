@@ -26,6 +26,8 @@ def start(args, config, oj, contest_id):
 	return
 
 def init(args, config):
+	if not args.contest_url.startswith('http'):
+		args.contest_url = 'https://atcoder.jp/contests/' + args.contest_url
 	url = urlparse(args.contest_url)
 	if url.netloc == 'atcoder.jp':
 		oj = AtCoder()
@@ -50,9 +52,5 @@ def init(args, config):
 	u_time = int(time.mktime(start_time.timetuple()))
 	sc.enterabs(u_time, 1, start, (args, config, oj, contest_id, ))
 	sc.run()
-
-	# problems = oj.get_problems(url)
-	
-	# write to problems.csv
 
 	return

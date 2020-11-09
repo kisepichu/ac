@@ -47,6 +47,8 @@ def submit(args, config):
 	
 	# -f option
 	if args.force:
+		print("force submit, temporary stopped")
+		return
 		oj.submit(problem, config['language_id'], source)
 		print_submitted(1)
 		return
@@ -75,7 +77,7 @@ def submit(args, config):
 	if args.choose or not testcase_num:
 		submit_flag = query_submit()
 	if submit_flag:
-		print(problem, config['language_id'], source)
+		# print(problem, config['language_id'], source)
 		oj.submit(problem, config['language_id'], source)
 	print_submitted(submit_flag)
 	return
