@@ -231,7 +231,7 @@ struct Start{
 #pragma endregion
 
 #pragma region const
-#define mod 998244353
+#define mod 1000000007
 const ld pi=acos(-1);
 const ld tau=(1.+sqrtl(5))/2.;
 P d4[4]={P(1,0),P(0,1),P(-1,0),P(0,-1)};
@@ -245,8 +245,14 @@ int cho(bool c,cs yes=AUTO_YES,cs no=AUTO_NO){
 
 #pragma region solve
 
-int solve(){
-	
+int solve(lint n, vector<lint> x){
+	lint ans=linf;
+	rep(p,1,101){
+		lint s=0;
+		each(x)s+=(e-p)*(e-p);
+		chmin(ans,s);
+	}
+	out(ans);
 	return 0;
 }
 
@@ -255,7 +261,14 @@ int solve(){
 #pragma region main
 
 int main(){
-	solve();
+	lint N;
+	scanf("%lld",&N);
+	vector<lint> X(N);
+	for(int i = 0 ; i < N ; i++){
+		scanf("%lld",&X[i]);
+	}
+	solve(N, move(X));
+	return 0;
 }
 
 #pragma endregion
