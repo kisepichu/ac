@@ -528,10 +528,9 @@ def abca(args, config):
 			option = argparse.Namespace()
 			doption = {
 				"force": 1,
-				"problem_char": args.problem_char,
 				"source_path": config['abca_path'],
 				"problem_char": "a",
-				"no_format": 0
+				"no_format": 1
 			};
 			for e in doption.keys():
 				vars(option)[e] = doption[e]

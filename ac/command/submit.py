@@ -44,6 +44,7 @@ def submit(args, config):
 			source = format(source)
 			f.write(source)
 		source_path = config['formatted_path']
+
 	
 	# -f option
 	if args.force:
