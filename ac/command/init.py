@@ -2,6 +2,7 @@
 
 import sched
 import time
+from datetime import datetime
 from urllib.parse import urlparse
 from command.oj.atcoder import AtCoder
 from command.oj.codeforces import CodeForces
@@ -46,9 +47,10 @@ def init(args, config):
 	print(f'start time: {start_time}')
 	
 	sc = sched.scheduler(time.time, time.sleep)
-	for i in range(1,31):
-		u_time = int(time.mktime((start_time - timedelta(seconds=i)).timetuple()))
-		sc.enterabs(u_time, 1, print_time)
+	if start_time > datetime.now():
+		for i in range(1,31):
+			u_time = int(time.mktime((start_time - timedelta(seconds=i)).timetuple()))
+			sc.enterabs(u_time, 1, print_time)
 	u_time = int(time.mktime(start_time.timetuple()))
 	sc.enterabs(u_time, 1, start, (args, config, oj, contest_id, ))
 	sc.run()
