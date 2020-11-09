@@ -75,10 +75,11 @@ class AtCoder:
 		res = self.session.get(f'https://atcoder.jp/contests/{contest_id}')
 		tree = lxml.html.fromstring(res.text)
 		start_str = tree.xpath('//*[@class="fixtime fixtime-full"]')[0].text_content()
-		start_str = '2020-6-27 2:37:00+0900'
+		# start_str = '2020-6-27 2:37:00+0900'
 		return datetime.strptime(start_str[:-5], '%Y-%m-%d %H:%M:%S')
 
-	def get_contest_id(self, urlpath):
+	def get_contest_id(self, url):
+		urlpath = url.path[1:].split('/')
 		if len(urlpath) >= 2 and urlpath[0] == 'contests':
 			return urlpath[1]
 		else:
