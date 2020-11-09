@@ -7,7 +7,6 @@
 pip3 install pyyaml
 pip3 install requests
 pip3 install lxml
-pip3 install lark-parser
 ```
 とかが必要で、ソースファイルと同じディレクトリに ac/ac/ を入れて
 ```
