@@ -245,8 +245,9 @@ int cho(bool c,cs yes=AUTO_YES,cs no=AUTO_NO){
 
 #pragma region solve
 
-int main(){
+int solve(){
 	
+	return 0;
 }
 
 #pragma endregion
@@ -254,18 +255,7 @@ int main(){
 #pragma region main
 
 int main(){
-	lint N;
-	scanf("%lld",&N);
-	lint K;
-	scanf("%lld",&K);
-	vector<lint> L(K);
-	vector<lint> R(K);
-	for(int i = 0 ; i < K ; i++){
-		scanf("%lld",&L[i]);
-		scanf("%lld",&R[i]);
-	}
-	solve(N, K, move(L), move(R));
-	return 0;
+	solve();
 }
 
 #pragma endregion
