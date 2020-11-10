@@ -8,7 +8,7 @@ from command.sub.format_ans import format_ans
 def test(config, problem):
 	test_dir = f'data/testcase/atcoder/{problem[1]}/'
 	if not os.path.exists(config['executable_path']):
-		return 'CE', -1
+		return 'CE', -1, 0
 
 	results = []
 	results_or = 0
