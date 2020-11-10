@@ -38,8 +38,6 @@ def submit(args, config):
 	with open(source_path, encoding="utf-8_sig", mode='r') as f:
 		source = f.read()
 	if not args.no_format:
-		with open(source_path, encoding="utf-8_sig", mode='r') as f:
-			source = f.read()
 		with open(config['formatted_path'], mode='w') as f:
 			source = format(source)
 			f.write(source)
@@ -65,7 +63,7 @@ def submit(args, config):
 		subprocess.run(config['compile'].replace("{{source}}", source_path).split())
 
 	# test
-	status, testcase_num = test(config, problem)
+	status, testcase_num, output_empty = test(config, problem)
 	print_status(status, testcase_num)
 	if status == 'CE':
 		return
@@ -74,7 +72,7 @@ def submit(args, config):
 	submit_flag = 1
 	if status != 'AC':
 		submit_flag = 0
-	if args.choose or not testcase_num:
+	if args.choose or not testcase_num or output_empty:
 		submit_flag = query_submit()
 	if submit_flag:
 		# print(problem, config['language_id'], source)
