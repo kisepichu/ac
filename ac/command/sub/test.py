@@ -13,6 +13,7 @@ def test(config, problem):
 	results = []
 	results_or = 0
 	cnt = 0
+	output_empty = 1
 	while os.path.exists(test_dir + f'{problem[2]}_{cnt+1}.input'):
 		cnt += 1
 
@@ -37,6 +38,8 @@ def test(config, problem):
 			expected = f.read()
 
 		if result == 'WJ':
+			if format_ans(expected) != '':
+				output_empty = 0
 			if format_ans(expected) == format_ans(output):
 				result = 'AC'
 			else:
@@ -58,4 +61,4 @@ def test(config, problem):
 
 	print_summary(cnt, results)
 
-	return result, cnt
+	return result, cnt, output_empty

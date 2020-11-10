@@ -40,6 +40,8 @@ def main():
 
 	# copy
 	parser_copy = subparsers.add_parser('copy')
+	parser_copy.add_argument('-s', '--source_path', default = '', help='source path')
+	parser_copy.add_argument('-n', '--no_format', action='store_true', help='no format')
 	parser_copy.set_defaults(handler=cpy)
 
 	# clear
