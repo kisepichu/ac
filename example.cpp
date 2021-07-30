@@ -244,8 +244,10 @@ int cho(bool c,cs yes=AUTO_YES,cs no=AUTO_NO){
 
 #pragma region solve
 
-int solve(lint a, lint b){
-	out(b+(a-b)/3.);
+// autoyn: Yes, No cho(c) to use
+
+int solve(vector<string> s){
+
 	return 0;
 }
 
@@ -254,11 +256,11 @@ int solve(lint a, lint b){
 #pragma region main
 
 int main(){
-	lint A;
-	scanf("%lld",&A);
-	lint B;
-	scanf("%lld",&B);
-	solve(A, B);
+	vector<string> S(4);
+	for(int i = 0 ; i < 4 ; i++){
+		cin >> S[i];
+	}
+	solve(move(S));
 	return 0;
 }
 
