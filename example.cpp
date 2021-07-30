@@ -1,5 +1,4 @@
-#include "stdafx.h"
-#define _ENV_TQK_ //*20201109* after edit, update v/tqk.cpp and clear submit\auto\*
+#define _ENV_TQK_ //*20210208* after edit, update v/tqk.cpp and clear submit\auto\*
 // %LocalAppdata%\Programs\Python\Python37\Lib\site-packages\atcodertools\tools\templates
 
 
@@ -83,9 +82,9 @@ istream& operator>>(istream& is,pair<T,L>& p){ is>>p.first;is>>p.second;return i
 template<class T,class L>
 ostream& operator<<(ostream& os,pair<T,L>& p){ os<<p.first<<" "<<p.second;return os; }
 template<class T>
-ostream& operator<<(ostream& os,vector<T>& vec){ os<<vec[0];rep(i,1,vec.size())os<<' '<<vec[i];return os; }
+ostream& operator<<(ostream& os,vector<T>& vec){ if(vec.size())os<<vec[0];rep(i,1,vec.size())os<<' '<<vec[i];return os; }
 template<class T>
-ostream& operator<<(ostream& os,deque<T>& deq){ os<<deq[0];rep(i,1,deq.size())os<<' '<<deq[i];return os; }
+ostream& operator<<(ostream& os,deque<T>& deq){ if(deq.size())os<<deq[0];rep(i,1,deq.size())os<<' '<<deq[i];return os; }
 template<class T>
 ostream& operator<<(ostream& os,set<T>& s){ each(s)os<<e<<" ";return os; }
 
@@ -245,14 +244,8 @@ int cho(bool c,cs yes=AUTO_YES,cs no=AUTO_NO){
 
 #pragma region solve
 
-int solve(lint n, vector<lint> x){
-	lint ans=linf;
-	rep(p,1,101){
-		lint s=0;
-		each(x)s+=(e-p)*(e-p);
-		chmin(ans,s);
-	}
-	out(ans);
+int solve(lint a, lint b){
+	out(b+(a-b)/3.);
 	return 0;
 }
 
@@ -261,13 +254,11 @@ int solve(lint n, vector<lint> x){
 #pragma region main
 
 int main(){
-	lint N;
-	scanf("%lld",&N);
-	vector<lint> X(N);
-	for(int i = 0 ; i < N ; i++){
-		scanf("%lld",&X[i]);
-	}
-	solve(N, move(X));
+	lint A;
+	scanf("%lld",&A);
+	lint B;
+	scanf("%lld",&B);
+	solve(A, B);
 	return 0;
 }
 
