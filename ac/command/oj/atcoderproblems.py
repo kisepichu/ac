@@ -4,6 +4,7 @@ import os
 import time
 from datetime import datetime
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from command.oj.atcoder import AtCoder
 
@@ -21,7 +22,7 @@ class AtCoderProblems:
         option.add_argument('--headless')
         option.add_argument('--no-sandbox')
         option.binary_location = '/usr/bin/google-chrome'
-        driver = webdriver.Chrome('/usr/local/bin/chromedriver', 0, option)
+        driver = webdriver.Chrome(ChromeDriverManager().install(), 0, option)
         self.session = driver
         return driver
 

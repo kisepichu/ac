@@ -230,7 +230,7 @@ struct Start{
 #pragma endregion
 
 #pragma region const
-#define mod 1000000007
+#define mod 998244353
 const ld pi=acos(-1);
 const ld tau=(1.+sqrtl(5))/2.;
 P d4[4]={P(1,0),P(0,1),P(-1,0),P(0,-1)};
@@ -244,10 +244,111 @@ int cho(bool c,cs yes=AUTO_YES,cs no=AUTO_NO){
 
 #pragma region solve
 
-// autoyn: Yes, No cho(c) to use
+// automod: 998244353
 
-int solve(vector<string> s){
+#pragma region lib_mint
+//, url:"https://tqkoh.github.io/library/library/lib/util/mint.hpp", version:"2020-08-08"
 
+#define md_tmp template<uint_fast64_t md=mod>
+md_tmp class modint{
+	using u64 = uint_fast64_t;
+
+public:
+	u64 a;
+
+	constexpr modint(const lint x = 0) noexcept: a((x+md)%md){}
+	constexpr u64& value() noexcept{ return a; }
+	constexpr const u64& value() const noexcept{ return a; }
+	constexpr modint operator+(const modint rhs) const noexcept{
+		return modint(*this) += rhs;
+	}
+	constexpr modint operator-(const modint rhs) const noexcept{
+		return modint(*this) -= rhs;
+	}
+	constexpr modint operator*(const modint rhs) const noexcept{
+		return modint(*this) *= rhs;
+	}
+	constexpr modint operator^(const lint rhs) const noexcept{
+		return modint(*this) ^= rhs;
+	}
+	constexpr modint operator/(const modint rhs) const noexcept{
+		return modint(*this) /= rhs;
+	}
+	constexpr modint& operator+=(const modint rhs) noexcept{
+		a += rhs.a;
+		if(a>=md)a -= md;
+		return *this;
+	}
+	constexpr modint& operator-=(const modint rhs) noexcept{
+		if(a<rhs.a)a += md;
+		a -= rhs.a;
+		return *this;
+	}
+	constexpr modint& operator*=(const modint rhs) noexcept{
+		a = a*rhs.a%md;
+		return *this;
+	}
+	constexpr modint& operator^=(const lint rhs) noexcept{
+		if(!rhs)return *this = 1;
+		u64 exp = rhs-1;
+		modint base = a;
+		while(exp){
+			if(exp&1)*this *= base;
+			base *= base;
+			exp >>= 1;
+		}
+		return *this;
+	}
+	constexpr modint& operator/=(const modint rhs) noexcept{
+		a = (*this*(rhs^(md-2))).a;
+		return *this;
+	}
+};
+md_tmp istream& operator>>(istream& os, modint<md>& m){
+	os>>m.a, m.a %= md;
+	return os;
+}
+md_tmp ostream& operator<<(ostream& os, const modint<md>& m){
+	return os<<m.a;
+}
+using mint = modint<>;
+#ifndef _AOJ_
+mint operator""m(unsigned long long n){ return mint(n); }
+#endif
+
+/*
+* @title Mint
+* @see https://noshi91.hatenablog.com/entry/2019/03/31/174006
+*/
+
+
+#pragma endregion
+
+int solve(lint p){
+	mint ans = 0;
+	lint r = sqrt(p)+1;
+	vector<lint>a(r);
+	/*rep(i, 1, r){
+		a[i]=(p-1)/i+1;
+		ans += (p-1)/i;
+	}*/
+	rep(i, 1, r){
+		auto fulfill = [&](lint x)->bool{
+			return (p-1)/x>=i;
+		};
+		lint ok = 0, ng = p+1, cen;
+		while(abs(ok-ng)>1)cen = (ok+ng)/2, (fulfill(cen)?ok:ng) = cen;
+		a[i] = ok;
+	}
+	rep(i, 1, r-1){
+		ans += mint(a[i]-a[i+1])*i;
+	}
+	rep(i, 1, p){
+		lint l = (p-1)/i;
+		if(l<=r-2)break;
+		ans += l;
+	}
+	out(ans+1);
 	return 0;
 }
 
@@ -256,11 +357,9 @@ int solve(vector<string> s){
 #pragma region main
 
 int main(){
-	vector<string> S(4);
-	for(int i = 0 ; i < 4 ; i++){
-		cin >> S[i];
-	}
-	solve(move(S));
+	lint P;
+	scanf("%lld", &P);
+	solve(P);
 	return 0;
 }
 

@@ -4,6 +4,7 @@
 /ac/data/testcase/*/*/*
 /ac/data/tmp/*
 /g/
+/deb/
 /bits/
 
 ## Ignore Visual Studio temporary files, build results, and
