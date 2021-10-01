@@ -45,29 +45,11 @@ def submit(args, config):
             f.write(source)
         source_path = config['formatted_path']
 
-<<<<<<< HEAD
-	# format
-	with open(source_path, encoding="utf-8_sig", mode='r') as f:
-		source = f.read()
-	if not args.no_format:
-		with open(config['formatted_path'], mode='w') as f:
-			source = format(source)
-			f.write(source)
-		source_path = config['formatted_path']
-
-	
-	# -f option
-	if args.force:
-		oj.submit(problem, config['language_id'], source)
-		print_submitted(1)
-		return
-=======
     # -f option
     if args.force:
         oj.submit(problem, config['language_id'], source)
         print_submitted(1)
         return
->>>>>>> dev
 
     # download testcases
     print_dltestcases(oj.download_testcases(problem))

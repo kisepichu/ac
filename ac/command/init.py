@@ -29,37 +29,6 @@ def start(args, config, oj, contest_id):
 
 
 def init(args, config):
-<<<<<<< HEAD
-	if not args.contest_url.startswith('http'):
-		args.contest_url = 'https://atcoder.jp/contests/' + args.contest_url
-	url = urlparse(args.contest_url)
-	if url.netloc == 'atcoder.jp':
-		oj = AtCoder()
-	elif url.netloc == 'codeforces.com':
-		oj = CodeForces()
-	elif url.netloc == 'kenkoooo.com':
-		oj = AtCoderProblems()
-	else:
-		raise Exception('no such online judge: ' + url.netloc)
-
-	contest_id = oj.get_contest_id(url)
-	if contest_id is None:
-		raise Exception('not a contest url: ', args.contest_url)
-
-	start_time = oj.get_start_time(contest_id)
-	print(f'start time: {start_time}')
-	
-	sc = sched.scheduler(time.time, time.sleep)
-	if start_time > datetime.now():
-		for i in range(1,31):
-			u_time = int(time.mktime((start_time - timedelta(seconds=i)).timetuple()))
-			sc.enterabs(u_time, 1, print_time)
-	u_time = int(time.mktime(start_time.timetuple()))
-	sc.enterabs(u_time, 1, start, (args, config, oj, contest_id, ))
-	sc.run()
-
-	return
-=======
     if not args.contest_url.startswith('http'):
         args.contest_url = 'https://atcoder.jp/contests/' + args.contest_url
     url = urlparse(args.contest_url)
@@ -90,4 +59,3 @@ def init(args, config):
     sc.run()
 
     return
->>>>>>> dev
