@@ -35,10 +35,12 @@ template<class T>inline T operator-(const vector<T>& a,const size_t&i){return a.
 #pragma endregion
 
 #pragma region rep
+#define _vcppunko2(tuple) _getname2 tuple
 #define _vcppunko3(tuple) _getname3 tuple
 #define _vcppunko4(tuple) _getname4 tuple
-#define _getname4(_1,_2,_3,_4,name,...) name
+#define _getname2(_1,_2,name,...) name
 #define _getname3(_1,_2,_3,name,...) name
+#define _getname4(_1,_2,_3,_4,name,...) name
 #define _trep2(tuple) _rep2 tuple
 #define _trep3(tuple) _rep3 tuple
 #define _trep4(tuple) _rep4 tuple
@@ -61,7 +63,10 @@ template<class T>inline T operator-(const vector<T>& a,const size_t&i){return a.
 #define _all2(v,a) v.begin(),v.begin()+a
 #define _all3(v,a,b) v.begin()+a,v.begin+b
 #define all(...) _vcppunko3((__VA_ARGS__,_tall3,_tall2,_all1))((__VA_ARGS__))
-#define each(c) for(auto &e:c)
+#define _teach2(tuple) _each2 tuple
+#define _each1(c) for(auto &e:c)
+#define _each2(e, c) for(auto &e:c)
+#define each(...) _vcppunko2((__VA_ARGS__,_teach2,_each1))((__VA_ARGS__))
 #pragma endregion
 
 #pragma region io
@@ -170,6 +175,11 @@ inline bool deb(Head head,Tail... tail){
 #pragma endregion
 
 #pragma region func
+vector<lint>& iota(lint n){
+	vector<lint>ret(n);
+	iota(all(ret), 0);
+	return ret;
+}
 inline constexpr lint gcd(lint a,lint b){ while(b){ lint c=b;b=a%b;a=c; }return a; }
 inline constexpr lint lcm(lint a,lint b){ return a/gcd(a,b)*b; }
 template<typename T>
@@ -178,21 +188,29 @@ template<typename T>
 inline constexpr bool chmax(T &mx,const T &cnt){ if(mx<cnt){ mx=cnt;return 1; } else return 0; }
 template <class F>
 inline void srt(F f){  }
-template <class F,class Head,class... Tail>
-inline void srt(F f,Head&& head,Tail&&... tail){
+template <class F, class Head, class... Tail>
+inline void srt(F f, Head&& head, Tail&&... tail){
 	vector<int>a(head.size());
-	iota(all(a),0);
-	sort(all(a),f);
-	auto res=head;
-	rep(head.size())res[i]=head[a[i]];
-	head=res;
-	srt(f,move(tail)...);
+	iota(all(a), 0);
+	sort(all(a), f);
+	auto res = head;
+	rep(head.size())res[i] = head[a[i]];
+	head = res;
+	srt(f, move(tail)...);
 }
-auto smaller(vector<lint>&a){
+template <class T>
+auto smaller(vector<T>&a){
 	return [&](int i,int j){return a[i]<a[j];};
 }
-auto larger(vector<lint>&a){
+template <class T>
+auto larger(vector<T>&a){
 	return [&](int i,int j){return a[i]>a[j];};
+}
+inline void i0(){  }
+template<class Head, class... Tail>
+inline void i0(Head&& head,Tail&&... tail){
+	each(head)--e;
+	i0(move(tail)...);
 }
 #pragma endregion
 
@@ -244,9 +262,91 @@ int cho(bool c,cs yes=AUTO_YES,cs no=AUTO_NO){
 
 #pragma region solve
 
+#pragma region lib_graph_template
+//, url:"https://tqkoh.github.io/library/library/lib/graph/graph-template.hpp", version:"wip"
 
-int solve(){
-	
+using length = lint;
+struct edge{
+	int src, to, id;
+	edge() = default;
+	edge(int src, int to, int id = 0): src(src), to(to), id(id){}
+};
+
+using Edges = vector<edge>;
+class Weighted: public vector<Edges>{
+public:
+	Weighted(int n){
+		this->resize(n);
+	}
+	void add_edge(edge e, bool directed = 0){
+		(*this)[e.src].push_back(e);
+		if(!directed)(*this)[e.to].push_back(edge(e.to, e.src, e.id));
+	}
+	void add_edge(int src, int to, int id = 0, bool directed = 0){
+		(*this)[src].push_back(edge(src, to, id));
+		if(!directed)(*this)[to].push_back(edge(to, src, id));
+	}
+};
+class Matrix: public vector<vector<length>>{
+public:
+	Matrix(int n, length inf = 2*linf){
+		this->resize(n, vector<length>(n, inf));
+		rep(n)(*this)[i][i] = 0;
+	}
+};
+
+
+/*
+* @title Graph Template
+*/
+
+
+#pragma endregion
+#pragma region lib_bfs
+
+template<class viFi, class vFe >
+void bfs(int n, int s, viFi next, vFe dtmn){
+	vector<int>vis(n);
+	queue<int>q({ s });
+	while(q.size()){
+		int c = q.front(); q.pop();
+		if(vis[c])continue;
+		vis[c] = 1;
+		each(next(c))if(!vis[e.to])dtmn(e), q.push(e.to);
+	}
+}
+
+#pragma endregion
+
+int solve(){ // prediction failed
+	lin(h, w);
+	vector s(h, cs(w, ' ')); each(s)in(e);
+	auto z = [&](lint y, lint x)->int{ return y*w+x; };
+	auto uz = [&](int n){ return P(n/w, n%w); };
+	lint ans = 0;
+	rep(sy, h)rep(sx, w)if(s[sy][sx]=='.'){
+		vector<lint>d(h*w);
+		bfs(h*w, z(sy, sx), [&](int c){ // lattice_next
+			vector<edge>r;
+			P p = uz(c);
+			rep(4){
+				auto [y, x] = p+d4[i];
+				if(0<=y&&y<h&&0<=x&&x<w&&s[y][x]=='.')r.push_back(edge(c, z(y, x)));
+			}
+			return r;
+		}, [&](edge e){ // dtmn
+			d[e.to] = d[e.src]+1; // cost[e.id]
+		});
+		rep(gy, h)rep(gx, w)chmax(ans, d[z(gy, gx)]);
+	}
+	out(ans);
+	return 0;
+}
+
+int solve_wip(){
+	lin(h, w);
+	vector s(h, cs(w, ' ')); each(s)in(e);
+
 	return 0;
 }
 
@@ -256,6 +356,7 @@ int solve(){
 
 int main(){
 	solve();
+	return 0;
 }
 
 #pragma endregion

@@ -1,15 +1,26 @@
 ﻿# coding: utf-8
 
+exc = [
+    ['//', 'autoyn:'],
+    ['//', 'automod:'],
+]
+
 def clear(args, config):
     with open(config['source_path'], mode='r') as f:
         source = f.readlines()
+    excflag = 0
     with open(config['source_path'], mode='w') as f:
         sta = ['root']
         for line in source:
             if line.startswith('#pragma endregion'):
                 sta.pop()
             if 'solve' not in sta and 'main' not in sta:
-                f.write(line)
+                if line.split()[:2] in exc:
+                    excflag = 1
+                elif excflag == 1:
+                    excflag = 0
+                else:
+                    f.write(line)
             if line.startswith('#pragma region'):
                 s = line.split()
                 sta.append(s[2])

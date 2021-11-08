@@ -20,10 +20,11 @@ def format(s):
         if output_flag:
             full += [line]
         if line.startswith('//#pragma region lib_'):
-            tmp = '+library{ name:' + sta[-1][4:]
-            if s[i+1].startswith('//,'):
-                tmp += s[i+1][2:]
-            tmp += ' }'
+            tmp = '#library <' + sta[-1][4:] + '>'
+            # tmp = '+library{ name:' + sta[-1][4:]
+            # if s[i+1].startswith('//,'):
+            #     tmp += s[i+1][2:]
+            # tmp += ' }'
             summary += [tmp]
         if sta[-1] == 'solve' and not line.startswith('//#'):
             summary += [line]
