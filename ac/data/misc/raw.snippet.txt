@@ -15,8 +15,7 @@
       <Declarations>
 {% literals %}
       </Declarations>
-      <Code Language="cpp" Delimiter="$"><![CDATA[{% code %}
-$selected$$end$]]></Code>
+      <Code Language="cpp" Delimiter="$"><![CDATA[{% dependency %}{% code %}$selected$$end$]]></Code>
     </Snippet>
   </CodeSnippet>
 </CodeSnippets>

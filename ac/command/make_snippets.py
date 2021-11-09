@@ -18,7 +18,7 @@ def make_snippet(config, filepath):
     file = path[-1]
     name = file[:-4]
     title = name.replace('-', '_')
-    title_no_underbar = name.replace('-', '')
+    title_no_underbar = name.replace('-', '').replace('_', '')
     url = config['library_url'] + '/' + categoly + '/' + file
     code = ''
     dependency = ''
@@ -41,7 +41,7 @@ def make_snippet(config, filepath):
     snippath = config['snippets_path'] + '/' + categoly + \
         f'/{title_no_underbar}Define.snippet'
     shutil.copyfile(os.path.dirname(os.path.abspath(__file__)) + '/../' +
-                    config['template_snippet_path'], snippath)
+                    config['template_library_snippet_path'], snippath)
 
     replacements = {
         '{% title %}': title,
@@ -64,14 +64,17 @@ def make_snippet(config, filepath):
             f.write(line)
 
 
-def make_raw_snippet(config, file):
+def make_raw_snippet(config, filepath):
     path = filepath.split('/')
     categoly = path[-2]
     file = path[-1]
     name = file[:-4]
     title = name.replace('-', '_')
-    title_no_underbar = name.replace('-', '')
+    title_no_underbar = name.replace('-', '').replace('_', '')
     url = config['library_url'] + '/' + categoly + '/' + file
+    code = ''
+    dependency = ''
+    literals = ''
     literal_tmp = """        <Literal Editable="true">
           <ID>{% literal_name %}</ID>
           <ToolTip>{% literal_name %}</ToolTip>
@@ -79,7 +82,39 @@ def make_raw_snippet(config, file):
           <Function>
           </Function>
         </Literal>"""
-    # ..
+    snippath = config['snippets_path'] + '/' + categoly + \
+        f'/{title_no_underbar}Define.snippet'
+    shutil.copyfile(os.path.dirname(os.path.abspath(__file__)) + '/../' +
+                    config['template_raw_snippet_path'], snippath)
+
+    with open(file, mode='r') as f:
+        cont = f.readlines()
+        for line in cont:
+            if line[:8] == '#literal':
+                literals += literal_tmp.replace(
+                    '{% literal_name %}', line[9:])
+            else:
+                code += line
+
+    replacements = {
+        '{% title %}': title,
+        '{% title_no_underbar %}': title_no_underbar,
+        '{% author %}': config['author'],
+        '{% url %}': url,
+        '{% literals %}': literals,
+        '{% code %}': code,
+        '{% dependency %}': dependency
+    }
+
+    cont = []
+    with open(snippath, mode='r', encoding='utf-8_sig') as f:
+        cont = f.readlines()
+        for i in range(len(cont)):
+            for be, af in replacements.items():
+                cont[i] = cont[i].replace(be, af)
+    with open(snippath, mode='w') as f:
+        for line in cont:
+            f.write(line)
     return
 
 
@@ -95,17 +130,16 @@ def make_snippets(args, config):
         files = glob.glob(f'{folder}/*')
         categoly = folder.split('/')[-1]
         print(f'{categoly}')
+        if not os.path.exists(config['snippets_path'] + '/' + categoly):
+            os.mkdir(config['snippets_path'] + '/' + categoly)
+        os.chdir(f'{folder}')
         if categoly in raw_snippets_categoly:
             for file in files:
                 make_raw_snippet(config, file)
                 print('  ' + file.split('/')[-1])
         else:
-            if not os.path.exists(categoly):
-                os.mkdir(categoly)
-            os.chdir(f'{folder}')
             for file in files:
                 make_snippet(config, file)
                 print('  ' + file.split('/')[-1])
-            os.chdir('../')
-
+        os.chdir('../')
     return
