@@ -46,6 +46,7 @@ alias mksnip='python3 ac/ac.py make-snippets'
 + :heavy_check_mark: `clear`: 全部消しテンプレートを貼る
 + :heavy_check_mark: `make-snippets`: [ライブラリ](https://tqkoh.github.io/library/)からソースコードを持ってきてスニペット化する (タイトル)[tab] と入力するとライブラリの中身が貼られるようにする(#include で提出されるときに埋め込まれるやつのほうがかっこいいが、ライブラリの中身をその場でいじりたいため)
 + :x: `generate [p]`: 入力を生成するアレ
++ :x: `test-library?`: ライブラリのテスト(個別)の書き途中用に.test.cpp の個別実行・確認
 
 ## 対応するサイト
 
@@ -53,4 +54,6 @@ alias mksnip='python3 ac/ac.py make-snippets'
   + :heavy_check_mark: 本家
   + ばちゃ AtCoder Problems
   + ~~ばちゃ AVC~~
-- :x: CodeForces(追加)(できたら)
+- :x: CodeForcesできたら)
+- :x: AOJ(できたら)
+- :x: yosupo judge(できたら)

@@ -92,8 +92,8 @@ def make_raw_snippet(config, filepath):
         for line in cont:
             if line[:8] == '#literal':
                 literals += literal_tmp.replace(
-                    '{% literal_name %}', line[9:])
-            else:
+                    '{% literal_name %}', line[9:-1])
+            elif line[0] != '#':
                 code += line
 
     replacements = {
