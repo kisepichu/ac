@@ -7,18 +7,22 @@ import lxml.html
 import glob
 import subprocess
 
+raw_snippets_categoly = [
+    'gomi',
+]
+
 
 def make_snippet(config, filepath):
     path = filepath.split('/')
     categoly = path[-2]
-    fil = path[-1]
-    name = fil[:-4]
+    file = path[-1]
+    name = file[:-4]
     title = name.replace('-', '_')
     title_no_underbar = name.replace('-', '')
-    url = config['library_url'] + '/' + categoly + '/' + fil
+    url = config['library_url'] + '/' + categoly + '/' + file
     code = ''
     dependency = ''
-    with open(fil, mode='r') as f:
+    with open(file, mode='r') as f:
         cont = f.readlines()
         for line in cont:
             if line == '#pragma once\n':
@@ -42,12 +46,12 @@ def make_snippet(config, filepath):
     replacements = {
         '{% title %}': title,
         '{% title_no_underbar %}': title_no_underbar,
+        '{% author %}': config['author'],
         '{% url %}': url,
         '{% version %}': version,
         '{% code %}': code,
         '{% dependency %}': dependency
     }
-    out = []
 
     cont = []
     with open(snippath, mode='r', encoding='utf-8_sig') as f:
@@ -58,6 +62,25 @@ def make_snippet(config, filepath):
     with open(snippath, mode='w') as f:
         for line in cont:
             f.write(line)
+
+
+def make_raw_snippet(config, file):
+    path = filepath.split('/')
+    categoly = path[-2]
+    file = path[-1]
+    name = file[:-4]
+    title = name.replace('-', '_')
+    title_no_underbar = name.replace('-', '')
+    url = config['library_url'] + '/' + categoly + '/' + file
+    literal_tmp = """        <Literal Editable="true">
+          <ID>{% literal_name %}</ID>
+          <ToolTip>{% literal_name %}</ToolTip>
+          <Default>{% literal_name %}</Default>
+          <Function>
+          </Function>
+        </Literal>"""
+    # ..
+    return
 
 
 def make_snippets(args, config):
@@ -72,12 +95,17 @@ def make_snippets(args, config):
         files = glob.glob(f'{folder}/*')
         categoly = folder.split('/')[-1]
         print(f'{categoly}')
-        if not os.path.exists(categoly):
-            os.mkdir(categoly)
-        os.chdir(f'{folder}')
-        for file in files:
-            make_snippet(config, file)
-            print('  ' + file.split('/')[-1])
-        os.chdir('../')
+        if categoly in raw_snippets_categoly:
+            for file in files:
+                make_raw_snippet(config, file)
+                print('  ' + file.split('/')[-1])
+        else:
+            if not os.path.exists(categoly):
+                os.mkdir(categoly)
+            os.chdir(f'{folder}')
+            for file in files:
+                make_snippet(config, file)
+                print('  ' + file.split('/')[-1])
+            os.chdir('../')
 
     return

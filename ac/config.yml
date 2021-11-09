@@ -5,6 +5,7 @@ executable_path: "../a.out"
 template_path: "/mnt/c/Users/shktm/AppData/Local/Programs/Python/Python37/Lib/site-packages/atcodertools/tools/templates/tqk.cpp"
 template_snippet_path: "data/misc/template.snippet.txt"
 snippets_path: "/mnt/c/Users/shktm/source/repos/snippets/library"
+author: "https://tqkoh.github.io/library"
 library_url: "https://tqkoh.github.io/library/lib"
 library_path: "/mnt/c/Users/shktm/source/repos/library"
 language_id: 4003
