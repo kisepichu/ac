@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from command.abca import *
-from command.make_snippet import *
+from command.make_snippets import *
 from command.clear import *
 from command.cpy import *
 from command.submit import *
@@ -56,9 +56,9 @@ def main():
     parser_clear = subparsers.add_parser('clear')
     parser_clear.set_defaults(handler=clear)
 
-    # make-snippet
-    parser_make_snippet = subparsers.add_parser('make-snippet')
-    parser_make_snippet.set_defaults(handler=make_snippet)
+    # make-snippets
+    parser_make_snippets = subparsers.add_parser('make-snippets')
+    parser_make_snippets.set_defaults(handler=make_snippets)
 
     # abca
     parser_abca = subparsers.add_parser('abca')

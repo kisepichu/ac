@@ -322,31 +322,16 @@ int solve(){ // prediction failed
 	lin(h, w);
 	vector s(h, cs(w, ' ')); each(s)in(e);
 	auto z = [&](lint y, lint x)->int{ return y*w+x; };
-	auto uz = [&](int n){ return P(n/w, n%w); };
+	Weighted g(h*w);
 	lint ans = 0;
 	rep(sy, h)rep(sx, w)if(s[sy][sx]=='.'){
 		vector<lint>d(h*w);
-		bfs(h*w, z(sy, sx), [&](int c){ // lattice_next
-			vector<edge>r;
-			P p = uz(c);
-			rep(4){
-				auto [y, x] = p+d4[i];
-				if(0<=y&&y<h&&0<=x&&x<w&&s[y][x]=='.')r.push_back(edge(c, z(y, x)));
-			}
-			return r;
-		}, [&](edge e){ // dtmn
+		bfs(h*w, z(sy, sx), g, [&](edge e){ // dtmn
 			d[e.to] = d[e.src]+1; // cost[e.id]
 		});
 		rep(gy, h)rep(gx, w)chmax(ans, d[z(gy, gx)]);
 	}
 	out(ans);
-	return 0;
-}
-
-int solve_wip(){
-	lin(h, w);
-	vector s(h, cs(w, ' ')); each(s)in(e);
-
 	return 0;
 }
 
