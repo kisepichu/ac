@@ -109,9 +109,9 @@ def make_raw_snippet(config, filepath):
     cont = []
     with open(snippath, mode='r', encoding='utf-8_sig') as f:
         cont = f.readlines()
-        for i in range(len(cont)):
-            for be, af in replacements.items():
-                cont[i] = cont[i].replace(be, af)
+    for i in range(len(cont)):
+        for be, af in replacements.items():
+            cont[i] = cont[i].replace(be, af)
     with open(snippath, mode='w') as f:
         for line in cont:
             f.write(line)
