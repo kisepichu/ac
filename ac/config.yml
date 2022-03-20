@@ -8,9 +8,9 @@ template_raw_snippet_path: "data/misc/raw.snippet.txt"
 snippets_path: "/mnt/c/Users/shktm/source/repos/snippets/library"
 author: "https://tqkoh.github.io/library"
 library_url: "https://tqkoh.github.io/library/lib"
-library_path: "/mnt/c/Users/shktm/source/repos/library"
+library_path: "/home/tqk/repos/library"
 language_id: 4003
-compile: "g++ {{source}} -std=c++1z --exec-charset=cp932 --input-charset=utf-8 -O2 -o ../a.out"
+compile: "g++ {{source}} -std=c++1z --exec-charset=cp932 --input-charset=utf-8 -O2 -I .. -o ../a.out"
 execute: "../a.out"
 abca_header: '#include "bits/stdc++.h"\nusing namespace std;\nusing lint = int64_t;\nint main(){\n'
 abca_footer: "}"
