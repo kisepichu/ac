@@ -11,7 +11,7 @@ def print_dltestcases(testcase_num):
 		print(f'downloaded {testcase_num} testcases')
 
 def print_status(status, testcase_num=1, end='\n'):
-	if status == 'AC':
+	if status == 'AC' or status == 'OK':
 		print(CACBG + status + CEND, end='')
 	elif status in ['TLE','WA','RE']:
 		print(CWABG + status + CEND, end='')
@@ -33,10 +33,12 @@ def print_submitted(f):
 	else:
 		print(CCE + 'not submitted' + CEND)
 
-def print_case(num, input, expected, output, result):
-	print(f' ===== case {num} ===== ')
+def print_case(num, input, expected, output, result, istest=1):
+	if istest:
+		print(f' ===== case {num} ===== ')
 	print('input:\n' + input)
-	print('expected:\n' + expected)
+	if istest:
+		print('expected:\n' + expected)
 	print('output:\n' + output)
 	print_status(result)
 
