@@ -5,6 +5,8 @@ from command.make_snippets import *
 from command.clear import *
 from command.cpy import *
 from command.submit import *
+from command.comp import *
+from command.run import *
 from command.init import *
 import sys
 import os
@@ -55,6 +57,18 @@ def main():
     # clear
     parser_clear = subparsers.add_parser('clear')
     parser_clear.set_defaults(handler=clear)
+
+    # compile
+    parser_compile = subparsers.add_parser('compile')
+    parser_compile.add_argument('-s', '--source_path',
+                             default='', help='source path')
+    parser_compile.add_argument(
+        '-n', '--no_format', action='store_true', help='no format')
+    parser_compile.set_defaults(handler=comp)
+
+    # run
+    parser_run = subparsers.add_parser('run')
+    parser_run.set_defaults(handler=run)
 
     # make-snippets
     parser_make_snippets = subparsers.add_parser('make-snippets')
