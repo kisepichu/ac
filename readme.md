@@ -83,4 +83,13 @@ alias g='python3 g/g.py'
 - :heavy_check_mark: AtCoder
 - :x: ばちゃ AtCoder Problems
 - :x: ~~ばちゃ AVC~~
-- :x: CodeForces(できたら)
+- :x: CodeForces
+
+## config
+`ac/config.yml`
+- `source_path`: メインのソースファイルの場所
+- `template_path`: テンプレートファイルの場所 `generate` に使われる
+- `snippets_path`: スニペットが生成される場所 `make-snippet` に
+- `compile`: コンパイルコマンド
+  - `{{source}}` で `source_path` を展開
+- `execute`: 実行コマンド 上と合わせる
