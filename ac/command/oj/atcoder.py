@@ -121,9 +121,16 @@ class AtCoder:
             output_data = tree.xpath(
                 f'//h3[text()="出力例 {cnt}"]')[0].getnext().text
 
+            if input_data is None:
+                continue
+
             with open(test_dir + f'{problem[2]}_{cnt}.input', mode='w') as f:
                 for line in input_data:
                     f.write(line)
+
+            if output_data is None:
+                continue
+
             with open(test_dir + f'{problem[2]}_{cnt}.output', mode='w') as f:
                 for line in output_data:
                     f.write(line)
