@@ -6,6 +6,7 @@ import lxml.html
 import pathlib
 import sys
 import subprocess
+import yaml
 
 from command.sub.format import format
 from command.sub.test import test
@@ -17,6 +18,13 @@ from command.oj.codeforces import CodeForces
 def submit(args, config):
     # print('args: ', args)
     # print('config: ', config)
+
+    if args.problem_char == "$":
+        args.problem_char = config["contest_data"]["resent_problem_char"]
+    else:
+        with open("data/contest/contest_data.yml", "w") as f:
+            config["contest_data"]["resent_problem_char"] = args.problem_char
+            yaml.dump(config["contest_data"], f)
 
     if ord("a") <= ord(args.problem_char[0]) and ord(args.problem_char[0]) <= ord("z"):
         if len(args.problem_char) == 1:
