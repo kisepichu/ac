@@ -37,6 +37,11 @@ def run(args, config):
                 problem_number = (ord(args.problem_char[0]) - ord("a") + 1) * 26 + (
                     ord(args.problem_char[1]) - ord("a")
                 )
+        else:
+            try:
+                problem_number = int(args.problem_char)
+            except:
+                raise Exception("couldn't understand problem_char")
 
         with open("data/contest/problems.csv", encoding="utf-8_sig", mode="r") as f:
             problem = f.readlines()[problem_number].split(",")
