@@ -5,9 +5,10 @@
 
 // author: Tqk
 // pc: desktop
-// template version: D20220320
+// template version: D20220402
 
 // #define _AOJ_
+#define _ATCODER_
 #define _C_INPUT_
 
 #pragma region template
@@ -25,7 +26,9 @@
 #include "bits/stdc++.h"
 using namespace std;
 #ifndef _AOJ_
+#ifdef _ATCODER_
 #include <atcoder/all>
+#endif
 #endif
 #define ac atcoder
 using lint = int64_t;

@@ -7,6 +7,7 @@ from command.cpy import *
 from command.submit import *
 from command.comp import *
 from command.run import *
+from command.generate import *
 from command.init import *
 import sys
 import os
@@ -85,6 +86,11 @@ def main():
     )
     parser_run.add_argument("problem_char", nargs="?", default="$")
     parser_run.set_defaults(handler=run)
+
+    # generate
+    parser_generate = subparsers.add_parser("generate")
+    parser_generate.add_argument("problem_char", nargs="?", default="$")
+    parser_generate.set_defaults(handler=generate)
 
     # make-snippets
     parser_make_snippets = subparsers.add_parser("make-snippets")
