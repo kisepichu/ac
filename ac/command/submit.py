@@ -11,6 +11,7 @@ import yaml
 from command.sub.format import format
 from command.sub.test import test
 from command.sub.scripts import *
+from command.sub.complement_problem_char import *
 from command.oj.atcoder import AtCoder
 from command.oj.codeforces import CodeForces
 
@@ -19,36 +20,21 @@ def submit(args, config):
     # print('args: ', args)
     # print('config: ', config)
 
-    if args.problem_char == "$":
-        args.problem_char = config["contest_data"]["resent_problem_char"]
+    contest_id, problem_number = complement_problem_char(args, config)
+
+    if contest_id == "":
+        with open("data/contest/problems.csv", encoding="utf-8_sig", mode="r") as f:
+            problem = f.readlines()[problem_number].split(",")
+            problem[2] = problem[2][:-1]
+            if problem[0] == "atcoder":
+                oj = AtCoder()
+            elif problem[0] == "codeforces":
+                oj = CodeForces()
+            else:
+                raise Exception(f"no such online judge: {problem[0]}")
     else:
-        with open("data/contest/contest_data.yml", "w") as f:
-            config["contest_data"]["resent_problem_char"] = args.problem_char
-            yaml.dump(config["contest_data"], f)
-
-    if ord("a") <= ord(args.problem_char[0]) and ord(args.problem_char[0]) <= ord("z"):
-        if len(args.problem_char) == 1:
-            problem_number = ord(args.problem_char) - ord("a")
-        else:
-            problem_number = (ord(args.problem_char[0]) - ord("a") + 1) * 26 + (
-                ord(args.problem_char[1]) - ord("a")
-            )
-    else:
-        try:
-            problem_number = int(args.problem_char)
-        except:
-            raise Exception("couldn't understand problem_char")
-
-    with open("data/contest/problems.csv", encoding="utf-8_sig", mode="r") as f:
-        problem = f.readlines()[problem_number].split(",")
-        problem[2] = problem[2][:-1]
-
-    if problem[0] == "atcoder":
         oj = AtCoder()
-    elif problem[0] == "codeforces":
-        oj = CodeForces()
-    else:
-        raise Exception(f"no such online judge: {problem[0]}")
+        problem = oj.get_problems(contest_id)[problem_number]
 
     if args.source_path == "":
         source_path = config["source_path"]
