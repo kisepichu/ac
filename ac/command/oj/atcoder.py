@@ -141,19 +141,20 @@ class AtCoder:
             self.tree = lxml.html.fromstring(self.res.text)
 
     def get_input(self, problem):
-        see_problem(problem)
-
+        self.see_problem(problem)
         #
+        return "get_input"
 
     def get_auto_yn(self, problem):
-        see_problem(problem)
+        self.see_problem(problem)
 
         #
+        return "get_auto_yes", "get_auto_no"
 
     def get_mod(self, problem):
-        see_problem(problem)
-
+        self.see_problem(problem)
         #
+        return "get_mod"
 
     def download_testcases(self, problem):
         test_dir = f"data/testcase/atcoder/{problem[1]}/"
@@ -162,7 +163,7 @@ class AtCoder:
         if not os.path.exists(test_dir):
             os.makedirs(test_dir)
 
-        see_problem(problem)
+        self.see_problem(problem)
 
         cnt = 0
         while len(self.tree.xpath(f'//h3[text()="入力例 {cnt+1}"]')):

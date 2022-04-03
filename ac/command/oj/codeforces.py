@@ -21,17 +21,17 @@ class CodeForces:
         return
 
     def get_input(self, problem):
-        see_problem(problem)
+        self.see_problem(problem)
 
         #
 
     def get_auto_yn(self, problem):
-        see_problem(problem)
+        self.see_problem(problem)
 
         #
 
     def get_mod(self, problem):
-        see_problem(problem)
+        self.see_problem(problem)
 
         #
 

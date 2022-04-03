@@ -309,12 +309,12 @@ int solve(){
 #pragma region main
 
 int main(){
-	{% if prediction_success %}
-	{{input_part}}
+{% if prediction_success %}
+{{input_part}}
 	solve({{ actual_arguments }});
-	{% else %}
+{% else %}
 	solve();
-	{% endif %}
+{% endif %}
 	return 0;
 }
 

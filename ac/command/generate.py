@@ -51,22 +51,67 @@ def generate(args, config):
     else:
         raise Exception(f"no such online judge: {problem[0]}")
 
-    if args.source_path == "":
-        source_path = config["source_path"]
-    else:
-        source_path = args.source_path
-
     pat = {}
 
     # predict
-    pat["actual_arguments"], pat["formal_arguments"], pat["input_part"] = predict(
-        oj.get_input(problem)
-    )
+    (
+        pat["prediction_success"],
+        pat["actual_arguments"],
+        pat["formal_arguments"],
+        pat["input_part"],
+    ) = predict(oj.get_input(problem))
     pat["yes_str"], pat["no_str"] = oj.get_auto_yn(problem)
     pat["mod"] = oj.get_mod(problem)
 
     # generate
+    template = []
+    with open(config["template_path"], encoding="utf-8_sig", mode="r") as f:
+        template = f.read()
+    template = template.split("\n")
+    source = []
 
-    # output
+    commands = ["pass"]
+    ifs = []
+    elses = []
+    elsefs = []
+    conds = []
+    ok = 1
+    for i in range(len(template)):
+        line = template[i]
+        for k, v in pat.items():
+            line = line.replace("{{ " + k + " }}", v)
+            line = line.replace("{{" + k + "}}", v)
+
+        if line.startswith("{%"):
+            tmp = line.split()
+            if tmp[1] == "if":
+                commands.append("if")
+                ifs.append([])
+                elses.append([])
+                elsefs.append(0)
+                conds.append(tmp[2])
+            elif tmp[1] == "else":
+                elsefs[-1] = 1
+            elif tmp[1] == "endif":
+                commands.pop()
+                if pat[conds[-1]] != "":
+                    source += ifs[-1]
+                else:
+                    source += elses[-1]
+                ifs.pop()
+                elses.pop()
+                elsefs.pop()
+                conds.pop()
+        else:
+            if commands[-1] == "pass":
+                source += [line]
+            elif commands[-1] == "if":
+                if elsefs[-1]:
+                    elses[-1] += [line]
+                else:
+                    ifs[-1] += [line]
+
+    with open(config["source_path"], mode="w") as f:
+        f.write("\n".join(source))
 
     return
