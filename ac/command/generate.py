@@ -59,7 +59,7 @@ def generate(args, config):
         pat["actual_arguments"],
         pat["formal_arguments"],
         pat["input_part"],
-    ) = predict(oj.get_input(problem))
+    ) = predict(problem, oj.get_input(problem))
     pat["yes_str"], pat["no_str"] = oj.get_auto_yn(problem)
     pat["mod"] = oj.get_mod(problem)
 
@@ -111,7 +111,8 @@ def generate(args, config):
                 else:
                     ifs[-1] += [line]
 
-    with open(config["source_path"], mode="w") as f:
-        f.write("\n".join(source))
+    # with open(config["source_path"], mode="w") as f:
+    #     f.write("\n".join(source))
+    #     1
 
     return

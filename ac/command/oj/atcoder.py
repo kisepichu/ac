@@ -142,19 +142,83 @@ class AtCoder:
 
     def get_input(self, problem):
         self.see_problem(problem)
-        #
-        return "get_input"
+
+        elem = self.tree.xpath(f'//h3[text()="入力"]')[0]
+        res = []
+        while elem is not None:
+            if elem.tag == "pre":
+                s = ""
+                for t in elem.itertext():
+                    s += t
+                res += [s]
+            elem = elem.getnext()
+        # print(res)
+        return res
 
     def get_auto_yn(self, problem):
         self.see_problem(problem)
 
-        #
-        return "get_auto_yes", "get_auto_no"
+        yns = [
+            ["yes", "no"],
+            ["Yes", "No"],
+            ["YES", "NO"],
+            ["possible", "impossible"],
+            ["Possible", "Impossible"],
+            ["Yay!", ":("],
+            ["POSSIBLE", "IMPOSSIBLE"],
+            ["Takahashi", "Aoki"],
+        ]
+
+        elem = self.tree.xpath(f'//h3[text()="出力"]')[0].getparent()
+        s = ""
+        for t in elem.itertext():
+            s += t
+        found = set()
+        for i in range(len(yns)):
+            yn = yns[i]
+            if yn[0] in s or yn[1] in s:
+                found.add(i)
+        res_yes = ""
+        res_no = ""
+        if len(found) == 1:
+            for i in found:
+                res_yes = yns[i][0]
+                res_no = yns[i][1]
+
+        # print(res_yes, res_no)
+        return res_yes, res_no
 
     def get_mod(self, problem):
         self.see_problem(problem)
-        #
-        return "get_mod"
+
+        mods = {
+            "998244353": 998244353,
+            "1000000007": 1000000007,
+            "1000000009": 1000000009,
+            "1e9+7": 1000000007,
+            "1e9 + 7": 1000000007,
+            "10^9+7": 1000000007,
+            "10^9 + 7": 1000000007,
+            "1e9+9": 1000000009,
+            "1e9 + 9": 1000000009,
+            "10^9+9": 1000000009,
+            "10^9 + 9": 1000000009,
+        }
+
+        elem = self.tree.xpath(f'//h3[text()="問題文"]')[0].getparent()
+        s = ""
+        for t in elem.itertext():
+            s += t
+        found = set()
+        for sign, mod in mods.items():
+            if sign in s:
+                found.add(mod)
+        ret = ""
+        if len(found) == 1:
+            for mod in found:
+                ret = str(mod)
+        # print(ret)
+        return ret
 
     def download_testcases(self, problem):
         test_dir = f"data/testcase/atcoder/{problem[1]}/"

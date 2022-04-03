@@ -8,6 +8,7 @@ from command.oj.atcoder import AtCoder
 from command.oj.codeforces import CodeForces
 from command.oj.atcoderproblems import AtCoderProblems
 from command.sub.scripts import *
+from command.generate import *
 
 
 def start(args, config, oj, contest_id):
@@ -22,6 +23,9 @@ def start(args, config, oj, contest_id):
     with open("data/contest/problems.csv", mode="w") as f:
         for problem in problems:
             f.write(",".join(problem) + "\n")
+
+    args.problem_char = "a"
+    generate(args, config)
 
     if args.download:
         for problem in problems:
