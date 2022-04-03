@@ -163,12 +163,102 @@ def horizontal_reduction(ex):
     return nex
 
 
-def vertical_reduction(ex):
-    return ex[:1]
+def read_sub(s, i, sd):
+    if i > 0 and s[i - 1] == "{":
+        l = i
+        r = l + sd
+        while r < len(s) and s[r] != "}":
+            r += 1
+        return s[l:r]
+    else:
+        return s[i : i + sd + 1]
+
+
+def vertical_reduction(ex, times):
+    # for es in ex:
+    #     print(es)
+    # print()
+    nex = [
+        [
+            {
+                "class": "rep",
+                "loopvar": str(chr(ord("i") + times)),
+                "begin": "1",
+                "end": "",
+            }
+        ]
+    ] + ex[1:2]
+    times += 1
+
+    if ex[1][0]["class"] != "vdots":
+        for j in range(len(ex[0])):
+            e = ex[0][j]
+            if "sub" in e:
+                for k in range(len(e["sub"])):
+                    n = len(e["sub"][k])
+                    for i in range(n):
+                        dif = ord(ex[1][j]["sub"][k][i]) - ord(ex[0][j]["sub"][k][i])
+                        if dif:
+                            app = ""
+                            start = ord(ex[0][j]["sub"][k][i]) - ord("1")
+                            if start:
+                                app = "+" + str(start)
+                            nex[1][j]["sub"][k] = (
+                                nex[1][j]["sub"][k][:i]
+                                + nex[0][0]["loopvar"]
+                                + app
+                                + nex[1][j]["sub"][k][i + 1 :]
+                            )
+                            if nex[0][0]["end"] == "":
+                                nex[0][0]["end"] = (
+                                    read_sub(
+                                        ex[-1][j]["sub"][k],
+                                        i,
+                                        len(ex[-1][j]["sub"][k])
+                                        - len(ex[0][j]["sub"][k]),
+                                    )
+                                    + "+1-("
+                                    + ex[0][j]["sub"][k][i]
+                                    + ")"
+                                )
+
+            if "size" in e:
+                for k in range(len(e["size"])):
+                    n = len(e["size"][k])
+                    for i in range(n):
+                        dif = ord(ex[1][j]["size"][k][i]) - ord(ex[0][j]["size"][k][i])
+                        if dif:
+                            app = ""
+                            start = ord(ex[0][j]["size"][k][i]) - ord("1")
+                            if start:
+                                app = "+" + str(start)
+                            nex[1][j]["size"][k] = (
+                                nex[1][j]["size"][k][:i]
+                                + nex[0][0]["loopvar"]
+                                + app
+                                + nex[1][j]["size"][k][i + 1 :]
+                            )
+                            if nex[0][0]["end"] == "":
+                                nex[0][0]["end"] = (
+                                    read_sub(
+                                        ex[-1][j]["sub"][k],
+                                        i,
+                                        len(ex[-1][j]["sub"][k])
+                                        - len(ex[0][j]["size"][k]),
+                                    )
+                                    + "+1-("
+                                    + ex[0][j]["size"][k][i]
+                                    + ")"
+                                )
+    else:
+        1
+
+    return nex
 
 
 def predict(problem, exs):
     success = ""
+    v_times = 0
 
     # format, reduction
     vars = {}
@@ -195,7 +285,7 @@ def predict(problem, exs):
         # print()
         nex = []
         l = 0
-        while l < len(ex):
+        while l < len(ex) and ex[l][0]["class"] != "end":
             r = l
             while r < len(ex) and (
                 ex[r][0]["class"] == "vdots"
@@ -205,11 +295,11 @@ def predict(problem, exs):
             ):
                 r += 1
             if r - l > 1:
-                nex += vertical_reduction(ex[l:r])
+                nex += vertical_reduction(ex[l:r], v_times)
             else:
                 nex += ex[l:r]
-            l += 1
-        for ne in ex:
+            l = r
+        for ne in nex:
             print(ne)
 
     # get testcases
