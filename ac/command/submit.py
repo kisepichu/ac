@@ -12,6 +12,7 @@ from command.sub.format import format
 from command.sub.test import test
 from command.sub.scripts import *
 from command.sub.complement_problem_char import *
+from command.generate import generate
 from command.oj.atcoder import AtCoder
 from command.oj.codeforces import CodeForces
 
@@ -83,4 +84,17 @@ def submit(args, config):
         # print(problem, config['language_id'], source)
         oj.submit(problem, config["language_id"], source)
     print_submitted(submit_flag)
+
+    # generate input for next problem
+
+    problem_number += 1
+    if problem_number >= 26:
+        problem_number -= 26
+        args.problem_char = chr(ord("a") + problem_number / 26) + chr(
+            ord("a") + problem_number % 26
+        )
+    else:
+        args.problem_char = chr(ord("a") + problem_number)
+    if status == "AC":
+        generate(args, config)
     return

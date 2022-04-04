@@ -538,7 +538,10 @@ def predict(problem, exs, constraints):
                 aargs += "move(" + var + "), "
             else:
                 aargs += var + ", "
-            fargs += vector_lint(d["dim"]) + " " + var + ", "
+            fvar = var
+            if var.lower() not in vars.keys():
+                fvar = var.lower()
+            fargs += vector_lint(d["dim"]) + " " + fvar + ", "
             input_part[0] += "\t" * indent
             input_part[0] += vector_lint(d["dim"]) + " " + var + ";\n"
         else:
@@ -548,8 +551,11 @@ def predict(problem, exs, constraints):
                 aargs += "move(" + var + "), "
             else:
                 aargs += var + ", "
+            fvar = var
+            if var.lower() not in vars.keys():
+                fvar = var.lower()
             fargs += (
-                vector_cs(min(2, d["dim"] + d["vertical_reducted"])) + " " + var + ", "
+                vector_cs(min(2, d["dim"] + d["vertical_reducted"])) + " " + fvar + ", "
             )
             input_part[0] += "\t" * indent
             input_part[0] += (
