@@ -45,7 +45,7 @@ def generate(args, config):
         pat["actual_arguments"],
         pat["formal_arguments"],
         pat["input_part"],
-    ) = predict(problem, oj.get_input(problem))
+    ) = predict(problem, oj.get_input(problem), oj.get_constraints(problem))
     pat["yes_str"], pat["no_str"] = oj.get_auto_yn(problem)
     pat["mod"] = oj.get_mod(problem)
 

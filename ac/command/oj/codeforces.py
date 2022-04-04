@@ -20,6 +20,9 @@ class CodeForces:
     def see_problem(self, problem):
         return
 
+    def get_constraints(self, problem):
+        self.see_problem(problem)
+
     def get_input(self, problem):
         self.see_problem(problem)
 

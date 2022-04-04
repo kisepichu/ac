@@ -140,6 +140,21 @@ class AtCoder:
                 )
             self.tree = lxml.html.fromstring(self.res.text)
 
+    def get_constraints(self, problem):
+        self.see_problem(problem)
+        li = self.tree.xpath(f'//h3[text()="制約"]')[0].getnext().getchildren()
+
+        res = []
+        for elem in li:
+            # if elem.tag == "li":
+            s = ""
+            for t in elem.itertext():
+                s += t
+            res += [s]
+
+        # print(res)
+        return res
+
     def get_input(self, problem):
         self.see_problem(problem)
 
