@@ -32,8 +32,8 @@ alias cpy='python3 ac/ac.py copy'
 alias clr='python3 ac/ac.py clear'
 alias cmp='python3 ac/ac.py compile'
 alias run='python3 ac/ac.py run'
+alias g='python3 ac/ac.py generate'
 alias mksnip='python3 ac/ac.py make-snippets'
-alias g='python3 g/g.py'
 ```
 - ライブラリへの追加を簡単にできるようにしたい
 
@@ -41,17 +41,15 @@ alias g='python3 g/g.py'
 
 - コンテストに出るとき、この順に実行する
 - p は指定しなければ前回実行時の問題番号が使われる(全コマンド共通)<br>なので基本 `generate` のみで p を指定する
+- 実装済み: :heavy_check_mark:、未実装: :x:
 
 ---
 
 - :heavy_check_mark: `init [url]`: コンテストの準備をする<br>例: `pre abc130`
   - まだ始まっていないコンテストなら始まるまで待つ
   - テストケースのダウンロードなどをする
+  - 問題 a の入力を生成する
   - url の代わりにコンテスト id でもいい
-
-- :x: `generate [p]`: 問題 p の入力を生成する<br>例: `g a`
-  - 元あった内容は消去される
-  - 今は atcoder-tools で生成して自分用に色々変えるプログラムを使っている(`g/g.py`) いずれ移行する
 
 - (ここでメインのソースコード(今は`example.cpp`)を編集)
 
@@ -59,7 +57,11 @@ alias g='python3 g/g.py'
   - `-c`: ステータスにかかわらず、yn で提出するか選択(正答が複数ある問題など)
   - `-f`: コンパイルせずに提出
 
-- `generate` に戻って次の問題を解く。
+- :heavy_check_mark: `generate [p]`: 問題 p の入力を生成する<br>例: `g a`
+  - メインのソースファイルにそのまま書き込まれる
+  - 元あった内容は消去される
+
+- 戻って次の問題を解く。
 
 ---
 
@@ -67,7 +69,7 @@ alias g='python3 g/g.py'
 
 - :x: `case [n]`: テストケースを操作 追加、削除、クリップボードにコピーなど 未定
 - :heavy_check_mark: `copy`: ソースコードを整形して、クリップボードにコピー(`submit` 未対応のコンテストサイトで)
-- :heavy_check_mark: `clear`: solve 内、入力部分を消す
+- :heavy_check_mark: `clear`: solve 内、入力部分を消す 上手く生成されなかった時など
 - :heavy_check_mark: `compile`: 整形してコンパイルする
 - :heavy_check_mark: `run [n] [p]`: 実行する
   - n が指定なし: 標準入力から入力
