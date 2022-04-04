@@ -97,8 +97,7 @@ def generate(args, config):
                 else:
                     ifs[-1] += [line]
 
-    # with open(config["source_path"], mode="w") as f:
-    #     f.write("\n".join(source))
-    #     1
+    with open(config["source_path"], mode="w") as f:
+        f.write("\n".join(source))
 
     return

@@ -311,10 +311,10 @@ int solve(){
 int main(){
 {% if prediction_success %}
 {{input_part}}
-	solve({{ actual_arguments }});
 {% else %}
 	solve();
 {% endif %}
+	// solve({{ actual_arguments }});
 	return 0;
 }
 

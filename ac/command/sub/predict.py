@@ -400,7 +400,7 @@ def predict(problem, exs, constraints):
         ex = exs[ex_i]
         ex = ex.split("\n")
         for i in range(len(ex)):
-            print(ex[i].replace("\r", ""))
+            # print(ex[i].replace("\r", ""))
             ex[i] = expand(erasespaces(ex[i].replace("\r", "")).split(" "), vars)
         for i in range(len(ex)):
             if "name" in ex[i][-1].keys():
@@ -511,7 +511,7 @@ def predict(problem, exs, constraints):
     # for e in tolower:
     #     vars[e.lower()] = vars[e]
     #     vars.pop(e)
-    print(vars)
+    # print(vars)
 
     # cppify
 
@@ -534,16 +534,32 @@ def predict(problem, exs, constraints):
 
     for var, d in vars.items():
         if d["type"] > 0:
+            if d["dim"] >= 1:
+                aargs += "move(" + var + "), "
+            else:
+                aargs += var + ", "
+            fargs += vector_lint(d["dim"]) + " " + var + ", "
             input_part[0] += "\t" * indent
             input_part[0] += vector_lint(d["dim"]) + " " + var + ";\n"
         else:
-            input_part[0] += "\t" * indent
             if "vertical_reducted" not in d:
                 d["vertical_reducted"] = 0
+            if d["dim"] + d["vertical_reducted"] >= 1:
+                aargs += "move(" + var + "), "
+            else:
+                aargs += var + ", "
+            fargs += (
+                vector_cs(min(2, d["dim"] + d["vertical_reducted"])) + " " + var + ", "
+            )
+            input_part[0] += "\t" * indent
             input_part[0] += (
                 vector_cs(min(2, d["dim"] + d["vertical_reducted"])) + " " + var + ";\n"
             )
 
+    if len(aargs):
+        aargs = aargs[:-2]
+    if len(fargs):
+        fargs = fargs[:-2]
     loopf = 0
 
     for ex_i in range(len(exs) - 1, -1, -1):
@@ -551,7 +567,7 @@ def predict(problem, exs, constraints):
         ex = exs[ex_i]
         for es_i in range(len(ex)):
             es = ex[es_i]
-            print(es)
+            # print(es)
             if es[0]["class"] == "rep":
                 loopf += 1
                 size = convert_sub(es[0]["end"])
@@ -649,9 +665,21 @@ def predict(problem, exs, constraints):
                     input_part[ex_i] += "\t" * indent
                     input_part[ex_i] += "}\n"
 
-        # print()
+    if input_type == "testcases":
+        input_part[0] += "\t" * indent
+        input_part[0] += "while(" + exs[0][0][0]["name"] + "--){\n"
+        indent += 1
+        for line in input_part[1].split("\n")[:-1]:
+            input_part[0] += "\t" * indent
+            input_part[0] += line + "\n"
+        input_part[0] += "\t" * indent
+        input_part[0] += "solve(" + aargs + ");\n"
+        indent -= 1
+        input_part[0] += "\t" * indent
+        input_part[0] += "}\n"
+    else:
+        input_part[0] += "\t" * indent
+        input_part[0] += "solve(" + aargs + ");\n"
 
-    for source in input_part:
-        print(source)
-        print()
+    # print(input_part[0])
     return success, aargs, fargs, input_part[0]
