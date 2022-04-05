@@ -55,6 +55,16 @@ def submit(args, config):
     if args.force:
         oj.submit(problem, config["language_id"], source)
         print_submitted(1)
+
+        problem_number += 1
+        if problem_number >= 26:
+            problem_number -= 26
+            args.problem_char = chr(ord("a") + problem_number // 26) + chr(
+                ord("a") + problem_number % 26
+            )
+        else:
+            args.problem_char = chr(ord("a") + problem_number)
+        generate(args, config)
         return
 
     # download testcases
