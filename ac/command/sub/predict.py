@@ -302,7 +302,7 @@ def guess(vars, constraint):
     change = set()
 
     for i in range(len(constraint)):
-        if "入力は全て整数" in constraint[i]:
+        if "入力は全て整数" in constraint[i] or "入力はすべて整数" in constraint[i]:
             for var, d in vars.items():
                 d["type"] += 2.5
             return
@@ -334,31 +334,34 @@ def guess(vars, constraint):
                         .replace("}", "")
                     )
                 )
+                print(n)
                 if n > 10**20:
                     constraint_type = "str"
                     strength = 4
             except:
                 1
+        if constraint_type == "":
             if (
                 "\\leq" in constraint[i]
                 or "\\leqq" in constraint[i]
                 or "\\le" in constraint[i]
+                or "\\times" in constraint[i]
                 or "<" in constraint[i]
                 or "≤" in constraint[i]
             ):
                 constraint_type = "int"
                 strength = 4
-            elif "#" in constraint[i] or "." in constraint[i]:
+            elif constraint[i] == "#" or constraint[i] == ".":
                 constraint_type = "str"
         name, sub = get_name_sub(constraint[i])
         if name + "_" + sub in vars.keys():
             change.add(name + "_" + sub)
         if name in vars.keys():
             change.add(name)
-    # print(constraint)
-    # print(constraint_type)
-    # print(change)
-    # print()
+    print(constraint)
+    print(constraint_type)
+    print(change)
+    print()
     if constraint_type == "int":
         for e in change:
             vars[e]["type"] += strength
@@ -511,7 +514,7 @@ def predict(problem, exs, constraints):
     # for e in tolower:
     #     vars[e.lower()] = vars[e]
     #     vars.pop(e)
-    # print(vars)
+    print(vars)
 
     # cppify
 
