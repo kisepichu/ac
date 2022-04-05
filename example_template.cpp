@@ -17,6 +17,7 @@
 #define IN_FILE "./in.txt"
 //#pragma GCC optimize ("O3")
 #pragma warning(disable: 4455 4244 4067 4068 4996)
+#define _CRT_SECURE_NO_WARNINGS
 #pragma GCC target ("avx")
 #pragma GCC diagnostic ignored "-Wliteral-suffix"
 #define NOMINMAX

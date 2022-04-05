@@ -90,7 +90,7 @@ def submit(args, config):
     problem_number += 1
     if problem_number >= 26:
         problem_number -= 26
-        args.problem_char = chr(ord("a") + problem_number / 26) + chr(
+        args.problem_char = chr(ord("a") + problem_number // 26) + chr(
             ord("a") + problem_number % 26
         )
     else:
