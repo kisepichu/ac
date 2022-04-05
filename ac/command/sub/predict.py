@@ -334,7 +334,6 @@ def guess(vars, constraint):
                         .replace("}", "")
                     )
                 )
-                print(n)
                 if n > 10**20:
                     constraint_type = "str"
                     strength = 4
@@ -358,10 +357,10 @@ def guess(vars, constraint):
             change.add(name + "_" + sub)
         if name in vars.keys():
             change.add(name)
-    print(constraint)
-    print(constraint_type)
-    print(change)
-    print()
+    # print(constraint)
+    # print(constraint_type)
+    # print(change)
+    # print()
     if constraint_type == "int":
         for e in change:
             vars[e]["type"] += strength
@@ -514,7 +513,7 @@ def predict(problem, exs, constraints):
     # for e in tolower:
     #     vars[e.lower()] = vars[e]
     #     vars.pop(e)
-    print(vars)
+    # print(vars)
 
     # cppify
 
