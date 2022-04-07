@@ -7,6 +7,7 @@ from command.cpy import *
 from command.submit import *
 from command.comp import *
 from command.run import *
+from command.case import *
 from command.generate import *
 from command.init import *
 import sys
@@ -86,6 +87,19 @@ def main():
     )
     parser_run.add_argument("problem_char", nargs="?", default="$")
     parser_run.set_defaults(handler=run)
+
+    # case
+    parser_case = subparsers.add_parser("case")
+    parser_case.add_argument("command", help="{copy, add, remove}")
+    parser_case.add_argument(
+        "testcase_num",
+        type=int,
+        nargs="?",
+        default=-1,
+        help="",
+    )
+    parser_case.add_argument("problem_char", nargs="?", default="$")
+    parser_case.set_defaults(handler=case)
 
     # generate
     parser_generate = subparsers.add_parser("generate")

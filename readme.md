@@ -29,6 +29,7 @@ python3 ac/ac.py
 alias pre='python3 ac/ac.py init'
 alias sub='python3 ac/ac.py submit'
 alias cpy='python3 ac/ac.py copy'
+alias tpy='python3 ac/ac.py case copy'
 alias clr='python3 ac/ac.py clear'
 alias cmp='python3 ac/ac.py compile'
 alias run='python3 ac/ac.py run'
@@ -75,6 +76,12 @@ alias mksnip='python3 ac/ac.py make-snippets'
   - n が指定なし: 標準入力から入力
   - n == 0: クリップボードから入力
   - n >= 1: (問題 p の) n 番目のテストケースを入力
+- :heavy_minus_sign: `case`: テストケースを操作する
+  - :heavy_check_mark: `copy [n]`: n 番目のテストケースをクリップボードにコピー
+  - :x: `add [n]`: n 番目のテストケースを作成/変更
+    - 標準入力から input output を入力する
+    - 特別な文字を入力したら変更しない など
+  - :x: `remove [n]`: n 番目のテストケースを削除
 - :heavy_check_mark: `make-snippets`: [ライブラリ](https://tqk.blue/library/)からソースコードを持ってきてスニペット化する
   - (タイトル)[tab] と入力するとライブラリの中身が貼られる
     - (#include で提出されるときに埋め込まれるやつのほうがかっこいいが、ライブラリの中身をその場でいじりたいため悩んでいる)
