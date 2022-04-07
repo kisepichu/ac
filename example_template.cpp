@@ -295,7 +295,7 @@ int cho(bool c,cs yes=AUTO_YES,cs no=AUTO_NO){
 
 {% if prediction_success %}
 int solve({{ formal_arguments }}){
-
+	
 	return 0;
 }
 {% else %}

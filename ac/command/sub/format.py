@@ -8,7 +8,7 @@ def format(s):
 
     output_flag = 0
     sta = ["root"]
-    summary += ["#ifdef SUMMARY // I †obfuscate† the code so that that won't be read"]
+    summary += ["#ifdef SUMMARY // I †obfuscate† the code so that it won't be read"]
     for i in range(len(s)):
         line = s[i]
         if line.startswith("#pragma region") or line.startswith("#pragma endregion"):
