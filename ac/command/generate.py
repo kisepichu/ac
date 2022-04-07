@@ -40,12 +40,21 @@ def generate(args, config):
     pat = {}
 
     # predict
-    (
-        pat["prediction_success"],
-        pat["actual_arguments"],
-        pat["formal_arguments"],
-        pat["input_part"],
-    ) = predict(problem, oj.get_input(problem), oj.get_constraints(problem))
+    try:
+        (
+            pat["prediction_success"],
+            pat["actual_arguments"],
+            pat["formal_arguments"],
+            pat["input_part"],
+        ) = predict(problem, oj.get_input(problem), oj.get_constraints(problem))
+    except:
+        print("prediction failed")
+        (
+            pat["prediction_success"],
+            pat["actual_arguments"],
+            pat["formal_arguments"],
+            pat["input_part"],
+        ) = ("", "", "", "")
     pat["yes_str"], pat["no_str"] = oj.get_auto_yn(problem)
     pat["mod"] = oj.get_mod(problem)
 

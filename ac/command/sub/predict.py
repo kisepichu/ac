@@ -422,30 +422,54 @@ def predict(problem, exs, constraints):
         # print()
         nex = []
         l = 0
+        fnames = []
         while l < len(ex):
             r = l + 1
             while r < len(ex):
-                if (
-                    "name" in ex[l][0]
-                    and "name" in ex[r][0]
-                    and ex[l][0]["name"] == ex[r][0]["name"]
-                ):
-                    1
+                if "name" in ex[r - 1][0]:
+                    fnames += [ex[r - 1][0]["name"]]
                 else:
                     ok = 0
-                    for j in range(len(ex[r])):
-                        ok |= ex[r][j]["class"] == "vdots"
+                    for j in range(len(ex[r - 1])):
+                        ok |= ex[r - 1][j]["class"] == "vdots"
                     if ok:
-                        ex[r][0]["class"] = "vdots"
+                        ex[r - 1][0]["class"] = "vdots"
                     else:
-                        break
+                        print("unrecognized line")
+                if ex[r - 1][0]["class"] == "vdots":
+                    nname = ex[r][0]["name"]
+                    while ex[l][0]["name"] != nname:
+                        nex += ex[l : l + 1]
+                        l += 1
+                    laststart = r
+                    c = 0
+                    while (
+                        "name" in ex[l + c][0]
+                        and "name" in ex[r][0]
+                        and ex[l + c][0]["name"] == ex[r][0]["name"]
+                    ):
+                        r += 1
+                        c += 1
+                    lumpsize = r - laststart
+                    pas = []
+                    while ex[l][0]["class"] != "vdots":
+                        for i in range(1, lumpsize):
+                            ex[l] += ex[l + i]
+                        pas += [ex[l]]
+                        l += lumpsize
+                    pas += [ex[l]]
+                    l += 1
+                    for i in range(1, lumpsize):
+                        ex[l] += ex[l + i]
+                    pas += [ex[l]]
+                    nex += vertical_reduction(pas, v_times, vars)
+                    l = r
                 r += 1
-            if r - l > 1:
-                nex += vertical_reduction(ex[l:r], v_times, vars)
-            else:
-                nex += ex[l:r]
-            # print(l, r)
-            l = r
+            if r >= len(ex):
+                for i in range(l, r):
+                    nex += ex[i : i + 1]
+                break
+
         exs[ex_i] = nex
 
     # input type
@@ -602,7 +626,7 @@ def predict(problem, exs, constraints):
                     + es[0]["begin"]
                     + ("" if es[0]["begin"] == "0" else "-1")
                     + ", "
-                    + es[0]["end"]
+                    + convert_sub(es[0]["end"])
                     + ("+1" if es[0]["begin"] == "0" else "")
                     + "){\n"
                 )
