@@ -63,6 +63,7 @@ def rparen(s):
 
 
 def erasespaces(s):
+    s = s.replace("  ", " ").replace("  ", " ").replace("  ", " ")
     res = ""
     d = 0
     rms = ["\\mathrm", "\\rm", "\\text", "\\textrm"]
@@ -102,6 +103,7 @@ def expand(ss, vars):
     for s in ss:
         ret.append({"class": "vdots"})
         if s == "":
+            # ret.pop()
             ret[-1]["class"] = "empty"
             continue
         if numeral(s[0]):
@@ -402,7 +404,7 @@ def predict(problem, exs, constraints):
         ex = exs[ex_i]
         ex = ex.split("\n")
         for i in range(len(ex)):
-            # print(ex[i].replace("\r", ""))
+            print(erasespaces(ex[i].replace("\r", "")))
             ex[i] = expand(erasespaces(ex[i].replace("\r", "")).split(" "), vars)
         for i in range(len(ex)):
             if "name" in ex[i][-1].keys():
@@ -411,6 +413,7 @@ def predict(problem, exs, constraints):
                 l = r - 1
                 while l >= 0 and (
                     ex[i][l]["class"] == "cdots"
+                    or ex[i][l]["class"] == "empty"
                     or "name" in ex[i][l]
                     and ex[i][l]["name"] == vec_name
                 ):
