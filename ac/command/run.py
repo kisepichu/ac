@@ -13,9 +13,16 @@ def run(args, config):
         input = pyperclip.paste().encode()
         expected = "#not_test".encode()
         timelimit = 3
-    elif args.testcase_num < 0:
+    elif args.testcase_num == -1:
         case_num = 0
         input = None
+        expected = "#not_test".encode()
+        timelimit = 99824
+    elif args.testcase_num < -1:
+        case_num = 0
+        if "run_input" not in config:
+            return
+        input = config["run_input"]
         expected = "#not_test".encode()
         timelimit = 99824
     else:
@@ -54,8 +61,13 @@ def run(args, config):
             with open(path, encoding="utf-8_sig", mode="r") as f:
                 input = f.read().encode()
         else:
-            print("testcase not found")
-            return
+            raise Exception("testcase not found")
+
+        if args.add_input:
+            if "run_input" not in config:
+                return
+            input += config["run_input"]
+
         path = test_dir + f"{problem[2]}_{args.testcase_num}.output"
         if os.path.exists(path):
             expected = None
@@ -90,4 +102,4 @@ def run(args, config):
         result,
         args.testcase_num > 0,
     )
-    return
+    return output

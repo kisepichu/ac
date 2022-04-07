@@ -38,6 +38,10 @@ def generate(args, config):
         problem = oj.get_problems(contest_id)[problem_number]
 
     pat = {}
+    if "test_generate" in config:
+        pat["test_generate"] = config["test_generate"]
+    else:
+        pat["test_generate"] = ""
 
     # predict
     try:

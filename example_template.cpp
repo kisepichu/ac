@@ -311,7 +311,7 @@ int solve(){
 
 int main(){
 {% if prediction_success %}
-{{input_part}}
+{{input_part}}{{test_generate}}
 {% else %}
 	solve();
 {% endif %}
