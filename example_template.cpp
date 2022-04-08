@@ -8,7 +8,7 @@
 // template version: D20220402
 
 // #define _AOJ_
-#define _ATCODER_
+// #define _ATCODER_
 #define _C_INPUT_
 
 #pragma region template
