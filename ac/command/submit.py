@@ -46,7 +46,7 @@ def submit(args, config):
     with open(source_path, encoding="utf-8_sig", mode="r") as f:
         source = f.read()
     if not args.no_format:
-        with open(config["formatted_path"], mode="w") as f:
+        with open(config["formatted_path"], mode="w+") as f:
             source = format(source)
             f.write(source)
         source_path = config["formatted_path"]
