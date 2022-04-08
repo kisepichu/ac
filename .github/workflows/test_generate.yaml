@@ -23,6 +23,9 @@ jobs:
           ls -la
           pip install -r requirements.txt
       - name: Pytest
+        env:
+          ac_id: ${{ secrets.ATCODER_ID }}
+          ac_password: ${{ secrets.ATCODER_PASSWORD }}
         run: |
           pytest --durations=0 --capture=no test --junit-xml results/test.xml
 
