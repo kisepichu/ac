@@ -1,3 +1,7 @@
+[![Test generate](https://github.com/tqkoh/ac/actions/workflows/test_generate.yaml/badge.svg)](https://github.com/tqkoh/ac/actions/workflows/test_generate.yaml)
+[![Tqk](https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fatcoder%2Fjson%2FTqk)](https://atcoder.jp/users/Tqk)
+[![Tqk](https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fcodeforces%2Fjson%2FTqk)](https://codeforces.com/profile/Tqk)
+
 # **自分用**競プロツール備忘録(575)
 
 - atcoder-tools 自分用
