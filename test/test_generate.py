@@ -75,7 +75,7 @@ config["run_no_print_case"] = 1
 
 
 @pytest.mark.parametrize("urlnum", [i for i in range(len(urls))])
-def test_afterinput(urlnum):
+def test_inputsize(urlnum):
     global oj
     global urls
     global config
