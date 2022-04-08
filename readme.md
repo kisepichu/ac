@@ -30,7 +30,7 @@ python3 ac/ac.py
 - コンテスト中にソースファイルを 1 個だけ使いまわす: デフォルトは `example.cpp` (実行すると生成される)
   - ファイル移動が面倒なため
 - 各コマンドでは整形してから処理する:
-  - 整形方法は [`ac/command/sub/format.py`](https://github.com/tqkoh/ac/blob/master/ac/command/sub/format.py) を編集すれば変えられる
+  - 整形方法は [ac/command/sub/format.py](https://github.com/tqkoh/ac/blob/master/ac/command/sub/format.py) を編集すれば変えられる
   - 今の状態:
     - `//sub-BOF`から`//sub-EOF`までを抜き出す
     - 提出ページの一番上に summary を表示する
@@ -56,7 +56,7 @@ alias mksnip='python3 ac/ac.py make-snippets'
 ## コマンド
 
 - コンテストに出るとき、この順に実行する
-- p は指定しなければ前回実行時の問題番号が使われる(全コマンド共通)<br>なので基本 `generate` のみで $p$ を指定する
+- p は指定しなければ前回実行時の問題番号が使われる(全コマンド共通)<br>なので基本 `generate` のみで p を指定する
 - 実装済み: :heavy_check_mark:、未実装: :x:
 
 ---
@@ -69,12 +69,12 @@ alias mksnip='python3 ac/ac.py make-snippets'
 
 - (ここで問題を解きメインのソースコード(今は`example.cpp`)を編集)
 
-- :heavy_check_mark: `submit [p]`: 整形して、問題 $p$ のサンプルチェックをして、AC なら提出する<br>例 `sub`
+- :heavy_check_mark: `submit [p]`: 整形して、問題 p のサンプルチェックをして、AC なら提出する<br>例 `sub`
   - 提出したら消去して次の問題の入力部分を自動生成する
   - `-c`: ステータスにかかわらず、yn で提出するか選択(正答が複数ある問題など)
   - `-f`: コンパイル、サンプルチェックをせずに提出
 
-- :heavy_check_mark: `generate [p]`: 問題 $p$ の入力部分を生成する<br>例: `g b`
+- :heavy_check_mark: `generate [p]`: 問題 p の入力部分を生成する<br>例: `g b`
   - 問題のページから入力方法などを推測する。
   - Yes/No で答える場合などの答えの文字列、mod を取る問題の mod なども推測して埋め込む。詳しくは [template の書き方](https://github.com/tqkoh/ac#template-の書き方)
   - 解く順番を変える場合/提出したものが WA で後から戻る場合に使う
@@ -92,13 +92,13 @@ alias mksnip='python3 ac/ac.py make-snippets'
 - :heavy_check_mark: `run [n] [p]`: 実行する
   - n が指定なし: 標準入力から入力
   - n == 0: クリップボードから入力
-  - n >= 1: (問題 $p$ の) $n$ 番目のテストケースを入力
+  - n >= 1: (問題 p の) n 番目のテストケースを入力
 - :heavy_minus_sign: `case`: テストケースを操作する
-  - :heavy_check_mark: `copy [n]`: $n$ 番目のテストケースをクリップボードにコピー
-  - :x: `add [n]`: $n$ 番目のテストケースを作成/変更
+  - :heavy_check_mark: `copy [n]`: n 番目のテストケースをクリップボードにコピー
+  - :x: `add [n]`: n 番目のテストケースを作成/変更
     - 標準入力から input output を入力する
     - 特別な文字を入力したら変更しない など
-  - :x: `remove [n]`: $n$ 番目のテストケースを削除
+  - :x: `remove [n]`: n 番目のテストケースを削除
 - :heavy_check_mark: `make-snippets`: [ライブラリ](https://tqk.blue/library/)からソースコードを持ってきてスニペット化する(Visual Studio 2019 用)
   - (タイトル)[tab] と入力するとライブラリの中身が貼られる
     - #include で書いて、提出されるときに埋め込まれるやつもかっこいいが、ライブラリの中身をその場でいじりたいためこうしている
