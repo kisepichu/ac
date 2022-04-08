@@ -23,7 +23,6 @@ class AtCoder:
         self.url = self.LOGIN_URL
         self.tree = lxml.html.fromstring(self.res.text)
         self.csrf_token = self.tree.xpath('//*[@name="csrf_token"]/@value')[0]
-        print("env(kakusareru yone):", os.environ.get("ac_id"))
         payload = {
             "username": os.environ.get("ac_id"),
             "password": os.environ.get("ac_password"),
