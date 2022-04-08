@@ -238,6 +238,7 @@ class AtCoder:
     def download_testcases(self, problem):
         test_dir = f"data/testcase/atcoder/{problem[1]}/"
         if os.path.exists(test_dir + f"{problem[2]}_1.input"):
+            # print("already downloaded")
             return -1
         if not os.path.exists(test_dir):
             os.makedirs(test_dir)

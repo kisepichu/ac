@@ -40,9 +40,9 @@ def run(args, config):
                 problem = f.readlines()[problem_number].split(",")
                 problem[2] = problem[2][:-1]
                 if problem[0] == "atcoder":
-                    1  # oj = AtCoder()
+                    oj = AtCoder()
                 elif problem[0] == "codeforces":
-                    1  # oj = CodeForces()
+                    oj = CodeForces()
                 else:
                     raise Exception(f"no such online judge: {problem[0]}")
         else:
@@ -52,11 +52,10 @@ def run(args, config):
         test_dir = f"data/testcase/atcoder/{problem[1]}/"
 
         path = test_dir + f"{problem[2]}_{args.testcase_num}.input"
-        if os.path.exists(path):
-            with open(path, encoding="utf-8_sig", mode="r") as f:
-                input = f.read().encode()
-        else:
-            raise Exception("testcase not found")
+
+        oj.download_testcases(problem)
+        with open(path, encoding="utf-8_sig", mode="r") as f:
+            input = f.read().encode()
 
         if args.add_input:
             if "run_input" not in config:
