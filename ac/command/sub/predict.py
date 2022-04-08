@@ -437,8 +437,6 @@ def predict(problem, exs, constraints):
                         ok |= ex[r - 1][j]["class"] == "vdots"
                     if ok:
                         ex[r - 1][0]["class"] = "vdots"
-                    else:
-                        print("unrecognized line")
                 if ex[r - 1][0]["class"] == "vdots":
                     nname = ex[r][0]["name"]
                     while ex[l][0]["name"] != nname:

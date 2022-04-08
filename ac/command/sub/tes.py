@@ -6,7 +6,7 @@ from command.sub.scripts import *
 from command.sub.format_ans import format_ans
 
 
-def test(config, problem):
+def tes(config, problem):
     test_dir = f"data/testcase/atcoder/{problem[1]}/"
     if not os.path.exists(config["executable_path"]):
         return "CE", -1, 0

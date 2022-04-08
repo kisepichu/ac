@@ -9,7 +9,7 @@ import subprocess
 import yaml
 
 from command.sub.format import format
-from command.sub.test import test
+from command.sub.tes import tes
 from command.sub.scripts import *
 from command.sub.complement_problem_char import *
 from command.generate import generate
@@ -79,7 +79,7 @@ def submit(args, config):
         subprocess.run(config["compile"].replace("{{source}}", source_path).split())
 
     # test
-    status, testcase_num, output_empty = test(config, problem)
+    status, testcase_num, output_empty = tes(config, problem)
     print_status(status, testcase_num)
     if status == "CE":
         return

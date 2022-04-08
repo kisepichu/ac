@@ -9,7 +9,6 @@ import subprocess
 import yaml
 
 from command.sub.format import format
-from command.sub.test import test
 from command.sub.scripts import *
 from command.sub.predict import *
 from command.sub.complement_problem_char import *
