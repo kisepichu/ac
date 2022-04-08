@@ -1,5 +1,4 @@
 #define _ENV_TQK_
-// 変更したら g/auto/* 内を削除する！
 
 //sub-BOF
 
