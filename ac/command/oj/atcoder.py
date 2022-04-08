@@ -23,6 +23,7 @@ class AtCoder:
         self.url = self.LOGIN_URL
         self.tree = lxml.html.fromstring(self.res.text)
         self.csrf_token = self.tree.xpath('//*[@name="csrf_token"]/@value')[0]
+        print("env(kakusareru yone):", os.environ.get("ac_id"))
         payload = {
             "username": os.environ.get("ac_id"),
             "password": os.environ.get("ac_password"),
@@ -91,7 +92,6 @@ class AtCoder:
                     f"https://atcoder.jp/contests/{contest_id}/submit"
                 )
         else:
-            print("self.res.status_code:", self.res.status_code)
             if self.res.status_code != 200:
                 self.url = ""
                 raise Exception(
@@ -100,7 +100,6 @@ class AtCoder:
 
         self.tree = lxml.html.fromstring(self.res.text)
         problem_ids = self.tree.xpath('//*[@id="select-task"]/option/@value')
-        print("self.res.text:", self.res.text)
         problems = []
         for problem_id in problem_ids:
             problems.append(["atcoder", contest_id, problem_id])
