@@ -91,6 +91,7 @@ class AtCoder:
                     f"https://atcoder.jp/contests/{contest_id}/submit"
                 )
         else:
+            print("self.res.status_code:", self.res.status_code)
             if self.res.status_code != 200:
                 self.url = ""
                 raise Exception(
@@ -99,6 +100,8 @@ class AtCoder:
 
         self.tree = lxml.html.fromstring(self.res.text)
         problem_ids = self.tree.xpath('//*[@id="select-task"]/option/@value')
+        print("self.tree:", self.tree)
+        print("problem_ids:", problem_ids)
         problems = []
         for problem_id in problem_ids:
             problems.append(["atcoder", contest_id, problem_id])
