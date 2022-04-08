@@ -4,7 +4,7 @@
 
 # **自分用**競プロツール備忘録(575)
 
-- Tqk の競プロツール
+- tqk の競プロツール
 - 全ての人間用は [oj](https://github.com/online-judge-tools/oj) などが上位互換
 - ツールというかコンテスト中の作業全部をするディレクトリ
 - wsl1 Ubuntu 18.04 LTS
@@ -121,8 +121,8 @@ alias mksnip='python3 ac/ac.py make-snippets'
 
 ## template の書き方
 [example_template.cpp](https://github.com/tqkoh/ac/blob/master/example_template.cpp) を見て
-- `{% if [v] %}` のみ、(`{% else %}` のみ、)`{% endif %}` のみからなる行で、$v$ が空でないかで場合分けできる
-- `{{ [v] }}` で、$v$ の中身を展開できる
+- `{% if [v] %}` のみ、(`{% else %}` のみ、)`{% endif %}` のみからなる行で、v が空でないかで場合分けできる
+- `{{ [v] }}` で、v の中身を展開できる
   - 使える変数(全て文字列):
     - `prediction_success`: 入力部分の推測が失敗したなら空、そうでないなら空でない
     - `input_part`: 問題から推測した入力部分の C++ コード。
