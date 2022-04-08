@@ -15,6 +15,8 @@ def comp(args, config):
     with open(source_path, encoding="utf-8_sig", mode="r") as f:
         source = f.read()
     if not args.no_format:
+        if not os.path.exists(config["formatted_path"]):
+            os.makedirs("/".join(config["formatted_path"].split("/")[:-1]))
         with open(config["formatted_path"], mode="w+") as f:
             source = format(source)
             f.write(source)
