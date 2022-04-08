@@ -8,7 +8,7 @@
 // template version: D20220402
 
 // #define _AOJ_
-#define _ATCODER_
+// #define _ATCODER_
 #define _C_INPUT_
 
 #pragma region template
@@ -311,7 +311,7 @@ int solve(){
 
 int main(){
 {% if prediction_success %}
-{{input_part}}
+{{input_part}}{{test_generate}}
 {% else %}
 	solve();
 {% endif %}

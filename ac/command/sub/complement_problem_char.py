@@ -8,7 +8,7 @@ def complement_problem_char(args, config):
     if len(args.problem_char) > 3:
         contest_id = "".join(args.problem_char.split("_")[:-1])
         args.problem_char = "".join(args.problem_char.split("_")[-1:])
-        print(contest_id, args.problem_char)
+        # print(contest_id, args.problem_char)
 
     if args.problem_char == "$":
         args.problem_char = config["contest_data"]["resent_problem_char"]

@@ -86,6 +86,7 @@ def main():
         help="empty to just run, 0 to paste from clipboard",
     )
     parser_run.add_argument("problem_char", nargs="?", default="$")
+    parser_run.add_argument("-a", "--add_input", action="store_true", help="")
     parser_run.set_defaults(handler=run)
 
     # case

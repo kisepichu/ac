@@ -9,7 +9,6 @@ import subprocess
 import yaml
 
 from command.sub.format import format
-from command.sub.test import test
 from command.sub.scripts import *
 from command.sub.predict import *
 from command.sub.complement_problem_char import *
@@ -38,6 +37,10 @@ def generate(args, config):
         problem = oj.get_problems(contest_id)[problem_number]
 
     pat = {}
+    if "test_generate" in config:
+        pat["test_generate"] = config["test_generate"]
+    else:
+        pat["test_generate"] = ""
 
     # predict
     try:

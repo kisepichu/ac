@@ -404,7 +404,7 @@ def predict(problem, exs, constraints):
         ex = exs[ex_i]
         ex = ex.split("\n")
         for i in range(len(ex)):
-            print(erasespaces(ex[i].replace("\r", "")))
+            # print(erasespaces(ex[i].replace("\r", "")))
             ex[i] = expand(erasespaces(ex[i].replace("\r", "")).split(" "), vars)
         for i in range(len(ex)):
             if "name" in ex[i][-1].keys():
@@ -437,8 +437,6 @@ def predict(problem, exs, constraints):
                         ok |= ex[r - 1][j]["class"] == "vdots"
                     if ok:
                         ex[r - 1][0]["class"] = "vdots"
-                    else:
-                        print("unrecognized line")
                 if ex[r - 1][0]["class"] == "vdots":
                     nname = ex[r][0]["name"]
                     while ex[l][0]["name"] != nname:

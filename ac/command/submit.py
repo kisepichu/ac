@@ -9,7 +9,7 @@ import subprocess
 import yaml
 
 from command.sub.format import format
-from command.sub.test import test
+from command.sub.tes import tes
 from command.sub.scripts import *
 from command.sub.complement_problem_char import *
 from command.generate import generate
@@ -46,7 +46,9 @@ def submit(args, config):
     with open(source_path, encoding="utf-8_sig", mode="r") as f:
         source = f.read()
     if not args.no_format:
-        with open(config["formatted_path"], mode="w") as f:
+        if not os.path.exists(config["formatted_path"]):
+            os.makedirs("/".join(config["formatted_path"].split("/")[:-1]))
+        with open(config["formatted_path"], mode="w+") as f:
             source = format(source)
             f.write(source)
         source_path = config["formatted_path"]
@@ -79,7 +81,7 @@ def submit(args, config):
         subprocess.run(config["compile"].replace("{{source}}", source_path).split())
 
     # test
-    status, testcase_num, output_empty = test(config, problem)
+    status, testcase_num, output_empty = tes(config, problem)
     print_status(status, testcase_num)
     if status == "CE":
         return

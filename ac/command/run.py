@@ -5,6 +5,10 @@ import subprocess
 import pyperclip
 from command.sub.scripts import *
 from command.sub.format import format
+from command.sub.complement_problem_char import *
+from command.oj.atcoder import AtCoder
+from command.oj.codeforces import CodeForces
+from command.oj.atcoderproblems import AtCoderProblems
 
 
 def run(args, config):
@@ -13,49 +17,51 @@ def run(args, config):
         input = pyperclip.paste().encode()
         expected = "#not_test".encode()
         timelimit = 3
-    elif args.testcase_num < 0:
+    elif args.testcase_num == -1:
         case_num = 0
         input = None
+        expected = "#not_test".encode()
+        timelimit = 99824
+    elif args.testcase_num < -1:
+        case_num = 0
+        if "run_input" not in config:
+            return
+        input = config["run_input"]
         expected = "#not_test".encode()
         timelimit = 99824
     else:
         case_num = args.testcase_num
         timelimit = 3
-        if args.problem_char == "$":
-            args.problem_char = config["contest_data"]["resent_problem_char"]
-        else:
-            with open("data/contest/contest_data.yml", "w") as f:
-                config["contest_data"]["resent_problem_char"] = args.problem_char
-                yaml.dump(config["contest_data"], f)
 
-        if ord("a") <= ord(args.problem_char[0]) and ord(args.problem_char[0]) <= ord(
-            "z"
-        ):
-            if len(args.problem_char) == 1:
-                problem_number = ord(args.problem_char) - ord("a")
-            else:
-                problem_number = (ord(args.problem_char[0]) - ord("a") + 1) * 26 + (
-                    ord(args.problem_char[1]) - ord("a")
-                )
-        else:
-            try:
-                problem_number = int(args.problem_char)
-            except:
-                raise Exception("couldn't understand problem_char")
+        contest_id, problem_number = complement_problem_char(args, config)
 
-        with open("data/contest/problems.csv", encoding="utf-8_sig", mode="r") as f:
-            problem = f.readlines()[problem_number].split(",")
-            problem[2] = problem[2][:-1]
+        if contest_id == "":
+            with open("data/contest/problems.csv", encoding="utf-8_sig", mode="r") as f:
+                problem = f.readlines()[problem_number].split(",")
+                problem[2] = problem[2][:-1]
+                if problem[0] == "atcoder":
+                    oj = AtCoder()
+                elif problem[0] == "codeforces":
+                    oj = CodeForces()
+                else:
+                    raise Exception(f"no such online judge: {problem[0]}")
+        else:
+            oj = AtCoder()
+            problem = oj.get_problems(contest_id)[problem_number]
 
         test_dir = f"data/testcase/atcoder/{problem[1]}/"
 
         path = test_dir + f"{problem[2]}_{args.testcase_num}.input"
-        if os.path.exists(path):
-            with open(path, encoding="utf-8_sig", mode="r") as f:
-                input = f.read().encode()
-        else:
-            print("testcase not found")
-            return
+
+        oj.download_testcases(problem)
+        with open(path, encoding="utf-8_sig", mode="r") as f:
+            input = f.read().encode()
+
+        if args.add_input:
+            if "run_input" not in config:
+                return
+            input = (input.decode() + config["run_input"]).encode()
+
         path = test_dir + f"{problem[2]}_{args.testcase_num}.output"
         if os.path.exists(path):
             expected = None
@@ -82,12 +88,13 @@ def run(args, config):
 
     if input is None:
         input = "(above)".encode()
-    print_case(
-        case_num,
-        input.decode(),
-        expected.decode(),
-        output,
-        result,
-        args.testcase_num > 0,
-    )
-    return
+    if "run_no_print_case" not in config:
+        print_case(
+            case_num,
+            input.decode(),
+            expected.decode(),
+            output,
+            result,
+            args.testcase_num > 0,
+        )
+    return output
