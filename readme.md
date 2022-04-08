@@ -70,7 +70,7 @@ alias mksnip='python3 ac/ac.py make-snippets'
 - (ここで問題を解きメインのソースコード(今は`example.cpp`)を編集)
 
 - :heavy_check_mark: `submit [p]`: 整形して、問題 p のサンプルチェックをして、AC なら提出する<br>例 `sub`
-  - 提出したら消去して次の問題の入力部分を自動生成する
+  - 提出したら消去して `generate (次の問題)` する
   - `-c`: ステータスにかかわらず、yn で提出するか選択(正答が複数ある問題など)
   - `-f`: コンパイル、サンプルチェックをせずに提出
 
@@ -120,7 +120,7 @@ alias mksnip='python3 ac/ac.py make-snippets'
 - `execute`: 実行コマンド 上と合わせる
 
 ## template の書き方
-[example_template.cpp](https://github.com/tqkoh/ac/blob/master/example_template.cpp) を見て
+[example_template.cpp](https://github.com/tqkoh/ac/blob/master/example_template.cpp#L256) の下の方を見て
 - `{% if [v] %}` のみ、(`{% else %}` のみ、)`{% endif %}` のみからなる行で、v が空でないかで場合分けできる
 - `{{ [v] }}` で、v の中身を展開できる
   - 使える変数(全て文字列):
@@ -128,6 +128,6 @@ alias mksnip='python3 ac/ac.py make-snippets'
     - `input_part`: 問題から推測した入力部分の C++ コード。
     - `formal_arguments`: solve の引数定義部分の C++ コード。`lint n, vector<lint> a` など
     - `mod`: 問題から推測した mod の値。`998244353` など
-    - `yes_str`: 問題から推測した Yes に対応する答え。
-    - `no_str`: 問題から推測した No に対応する答え。
+    - `yes_str`: 問題から推測した Yes に対応する答え。`Possible` など
+    - `no_str`: 問題から推測した No に対応する答え。`Impossible` など
     - `test_generate`: テスト用、`input_part` の後につける。

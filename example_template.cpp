@@ -314,7 +314,6 @@ int main(){
 {% else %}
 	solve();
 {% endif %}
-	// solve({{ actual_arguments }});
 	return 0;
 }
 
