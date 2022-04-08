@@ -100,8 +100,7 @@ class AtCoder:
 
         self.tree = lxml.html.fromstring(self.res.text)
         problem_ids = self.tree.xpath('//*[@id="select-task"]/option/@value')
-        print("self.tree:", self.tree)
-        print("problem_ids:", problem_ids)
+        print("self.res.text:", self.res.text)
         problems = []
         for problem_id in problem_ids:
             problems.append(["atcoder", contest_id, problem_id])
