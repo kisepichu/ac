@@ -89,6 +89,7 @@ def test_inputsize(urlnum):
     ok = 1
     testcase_num = 1
     while 1:
+        output = run(run_args(testcase_num, url.split("/")[-1]), config)
         try:
             output = run(run_args(testcase_num, url.split("/")[-1]), config)
         except:
