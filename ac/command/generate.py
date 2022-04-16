@@ -43,6 +43,7 @@ def generate(args, config):
         pat["test_generate"] = ""
 
     # predict
+    # predict(problem, oj.get_input(problem), oj.get_constraints(problem))
     try:
         (
             pat["prediction_success"],
