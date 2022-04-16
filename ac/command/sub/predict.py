@@ -151,6 +151,7 @@ def expand(ss, vars):
         if ret[i]["class"][:3] == "var":
             if ret[i]["class"] == "var_charlist":
                 name, sub = get_name_sub(ss[i])
+                name = name[0]
                 sub = sub[:-1]
                 vars[name] = {"dim": -1, "type": -10}
                 ret[i]["name"] = name
