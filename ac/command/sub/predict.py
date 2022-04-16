@@ -18,7 +18,18 @@ vdots = cdots + [
 
 
 def get_name_sub(s):
-    ubarpos = s.find("_")
+    # print(s)
+    # ubarpos = s.find("_")
+    ubarpos = -1
+    inparen = 0
+    for i in range(len(s)):
+        if s[i] == "{":
+            inparen += 1
+        if not inparen and s[i] == "_":
+            ubarpos = i
+        if s[i] == "}":
+            inparen -= 1
+    # print(ubarpos)
     r_name = ubarpos
     if r_name == -1:
         return s, ""
@@ -67,6 +78,8 @@ def erasespaces(s):
     res = ""
     d = 0
     rms = ["\\mathrm", "\\rm", "\\text", "\\textrm"]
+    for rm in rms:
+        s = s.replace("{" + rm, rm + "{")
     for rm in rms:
         pos = s.find(rm)
         if pos != -1:
@@ -406,6 +419,7 @@ def predict(problem, exs, constraints):
         for i in range(len(ex)):
             # print(erasespaces(ex[i].replace("\r", "")))
             ex[i] = expand(erasespaces(ex[i].replace("\r", "")).split(" "), vars)
+            # print(ex[i])
         for i in range(len(ex)):
             if "name" in ex[i][-1].keys():
                 vec_name = ex[i][-1]["name"]
