@@ -496,6 +496,12 @@ def predict(problem, exs, constraints):
         input_type = "queries"
     else:
         input_type = "testcases"
+        query_names = ["query", "Query", "q"]
+        for ex in exs:
+            for e in ex:
+                if "name" in e[0] and e[0]["name"] in query_names:
+                    input_type = "queries"
+    print(input_type)
 
     if input_type == "queries":
         query_vars = set(["q_type"])
@@ -655,13 +661,16 @@ def predict(problem, exs, constraints):
                 input_part[ex_i] += ");\n"
                 for i in range(1, len(exs)):
                     input_part[ex_i] += "\t" * indent
-                    input_part[ex_i] += (
-                        "if(q_type["
-                        + ex[es_i - 1][0]["loopvar"]
-                        + "]=="
-                        + exs[i][0][0]["num"]
-                        + "){\n"
-                    )
+                    if len(exs) > 1:
+                        input_part[ex_i] += "if(1){\n"
+                    else:
+                        input_part[ex_i] += (
+                            "if(q_type["
+                            + ex[es_i - 1][0]["loopvar"]
+                            + "]=="
+                            + exs[i][0][0]["num"]
+                            + "){\n"
+                        )
                     indent += 1
                     for line in input_part[i].split("\n")[:-1]:
                         input_part[ex_i] += "\t" * indent
