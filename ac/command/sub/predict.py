@@ -661,7 +661,7 @@ def predict(problem, exs, constraints):
                 input_part[ex_i] += ");\n"
                 for i in range(1, len(exs)):
                     input_part[ex_i] += "\t" * indent
-                    if len(exs) > 1:
+                    if "num" not in exs[i][0][0]:
                         input_part[ex_i] += "if(1){\n"
                     else:
                         input_part[ex_i] += (
