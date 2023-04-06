@@ -14,3 +14,5 @@ alias g='python3 ac/ac.py generate'
 alias g2='python3 g/g.py'
 alias pc='cd $WREPOS/ac'
 alias abca='python3 ac/ac.py abca'
+
+source env.sh

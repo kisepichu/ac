@@ -46,9 +46,9 @@ python3 ac/ac.py
       - ライブラリを貼った部分は名前だけ表示
 - 短く書く: `sub a` で `python3 ac/ac.py submit a` など<br>
 ```bash
-source compro.sh
+source init.sh
 ```
-  
+
 </details>
 
 ## コマンド
