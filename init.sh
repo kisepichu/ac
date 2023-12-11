@@ -1,7 +1,3 @@
-alias new='acc new --template cpp'
-alias sub_old='g++ a.cpp && oj t && acc s'
-alias reb='exec $SHELL -l'
-alias tmreb='tmux source-file ~/.tmux.conf'
 alias pre='python3 ac/ac.py init'
 alias sub='python3 ac/ac.py submit'
 alias cpy='python3 ac/ac.py copy'
