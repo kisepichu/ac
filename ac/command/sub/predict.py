@@ -18,7 +18,18 @@ vdots = cdots + [
 
 
 def get_name_sub(s):
-    ubarpos = s.find("_")
+    # print(s)
+    # ubarpos = s.find("_")
+    ubarpos = -1
+    inparen = 0
+    for i in range(len(s)):
+        if s[i] == "{":
+            inparen += 1
+        if not inparen and s[i] == "_":
+            ubarpos = i
+        if s[i] == "}":
+            inparen -= 1
+    # print(ubarpos)
     r_name = ubarpos
     if r_name == -1:
         return s, ""
@@ -67,6 +78,8 @@ def erasespaces(s):
     res = ""
     d = 0
     rms = ["\\mathrm", "\\rm", "\\text", "\\textrm"]
+    for rm in rms:
+        s = s.replace("{" + rm, rm + "{")
     for rm in rms:
         pos = s.find(rm)
         if pos != -1:
@@ -138,6 +151,7 @@ def expand(ss, vars):
         if ret[i]["class"][:3] == "var":
             if ret[i]["class"] == "var_charlist":
                 name, sub = get_name_sub(ss[i])
+                name = name[0]
                 sub = sub[:-1]
                 vars[name] = {"dim": -1, "type": -10}
                 ret[i]["name"] = name
@@ -406,6 +420,7 @@ def predict(problem, exs, constraints):
         for i in range(len(ex)):
             # print(erasespaces(ex[i].replace("\r", "")))
             ex[i] = expand(erasespaces(ex[i].replace("\r", "")).split(" "), vars)
+            # print(ex[i])
         for i in range(len(ex)):
             if "name" in ex[i][-1].keys():
                 vec_name = ex[i][-1]["name"]
@@ -481,10 +496,16 @@ def predict(problem, exs, constraints):
         input_type = "queries"
     else:
         input_type = "testcases"
+        query_names = ["query", "Query", "q"]
+        for ex in exs:
+            for e in ex:
+                if "name" in e[0] and e[0]["name"] in query_names:
+                    input_type = "queries"
+    print(input_type)
 
     if input_type == "queries":
-        query_vars = set(["q_type"])
-        vars["q_type"] = {"dim": 1, "type": 10}
+        query_vars = set(["qtype"])
+        vars["qtype"] = {"dim": 1, "type": 10}
         for i in range(len(exs[0]) - 2, -1, -1):
             if exs[0][i][0]["class"] == "rep" and exs[0][i + 1][0]["class"] == "var":
                 exs[0][i + 1][0]["class"] = "query"
@@ -633,20 +654,24 @@ def predict(problem, exs, constraints):
                 )
                 indent += 1
             elif es[0]["class"] == "query":
-                input_part[ex_i] += "\t" * indent
-                input_part[ex_i] += "in(q_type"
-                for sub in es[0]["sub"]:
-                    input_part[ex_i] += "[" + sub + "]"
-                input_part[ex_i] += ");\n"
+                if "num" in exs[1][0][0]:
+                    input_part[ex_i] += "\t" * indent
+                    input_part[ex_i] += "in(qtype"
+                    for sub in es[0]["sub"]:
+                        input_part[ex_i] += "[" + sub + "]"
+                    input_part[ex_i] += ");\n"
                 for i in range(1, len(exs)):
                     input_part[ex_i] += "\t" * indent
-                    input_part[ex_i] += (
-                        "if(q_type["
-                        + ex[es_i - 1][0]["loopvar"]
-                        + "]=="
-                        + exs[i][0][0]["num"]
-                        + "){\n"
-                    )
+                    if "num" not in exs[i][0][0]:
+                        input_part[ex_i] += "if(1){\n"
+                    else:
+                        input_part[ex_i] += (
+                            "if(qtype["
+                            + ex[es_i - 1][0]["loopvar"]
+                            + "]=="
+                            + exs[i][0][0]["num"]
+                            + "){\n"
+                        )
                     indent += 1
                     for line in input_part[i].split("\n")[:-1]:
                         input_part[ex_i] += "\t" * indent

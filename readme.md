@@ -7,16 +7,23 @@
 - tqk の競プロツール
 - 全ての人間用は [oj](https://github.com/online-judge-tools/oj) などが上位互換
 - ツールというかコンテスト中の作業全部をするディレクトリ
-- wsl1 Ubuntu 18.04 LTS
+- wsl Ubuntu 18.04 LTS
 
 ## インストール
+
+このフォルダで
+
 ```bash
 pip3 install -r requirements.txt
 ```
+
 - タリンかも
 
 ## 実行
-```
+
+このフォルダで
+
+```bash
 python3 ac/ac.py
 ```
 
@@ -37,20 +44,11 @@ python3 ac/ac.py
       - テンプレートが邪魔なため
       - solve 部分のみを切り取り最上部に表示
       - ライブラリを貼った部分は名前だけ表示
-- 短く書く: <br>
-~/.bashrc に追加するなど 例:
+- 短く書く: `sub a` で `python3 ac/ac.py submit a` など<br>
+```bash
+source init.sh
 ```
-alias pre='python3 ac/ac.py init'
-alias sub='python3 ac/ac.py submit'
-alias cpy='python3 ac/ac.py copy'
-alias tpy='python3 ac/ac.py case copy'
-alias clr='python3 ac/ac.py clear'
-alias cmp='python3 ac/ac.py compile'
-alias run='python3 ac/ac.py run'
-alias g='python3 ac/ac.py generate'
-alias mksnip='python3 ac/ac.py make-snippets'
-```
-  
+
 </details>
 
 ## コマンド
@@ -62,6 +60,7 @@ alias mksnip='python3 ac/ac.py make-snippets'
 ---
 
 - :heavy_check_mark: `init [url]`: コンテストの準備をする<br>例: `pre abc130`
+
   - コンテスト url の代わりにコンテスト id でもいい
   - まだ始まっていないコンテストなら始まるまで待ってから
   - テストケースのダウンロードなどをする
@@ -70,11 +69,13 @@ alias mksnip='python3 ac/ac.py make-snippets'
 - (ここで問題を解きメインのソースコード(今は`example.cpp`)を編集)
 
 - :heavy_check_mark: `submit [p]`: 整形して、問題 p のサンプルチェックをして、AC なら提出する<br>例 `sub`
+
   - 提出したら消去して `generate (次の問題)` する
   - `-c`: ステータスにかかわらず、yn で提出するか選択(正答が複数ある問題など)
   - `-f`: コンパイル、サンプルチェックをせずに提出
 
 - :heavy_check_mark: `generate [p]`: 問題 p の入力部分を生成する<br>例: `g b`
+
   - 問題のページから入力方法などを推測する。
   - Yes/No で答える場合などの答えの文字列、mod を取る問題の mod なども推測して埋め込む。詳しくは [template の書き方](https://github.com/tqkoh/ac#template-の書き方)
   - 解く順番を変える場合/提出したものが WA で後から戻る場合に使う
@@ -111,7 +112,9 @@ alias mksnip='python3 ac/ac.py make-snippets'
 - :x: CodeForces
 
 ## config
+
 `ac/config.yml`
+
 - `source_path`: メインのソースファイルの場所
 - `template_path`: テンプレートファイルの場所 `generate` に使われる
 - `snippets_path`: スニペットが生成される場所 `make-snippet` に
@@ -120,7 +123,9 @@ alias mksnip='python3 ac/ac.py make-snippets'
 - `execute`: 実行コマンド 上と合わせる
 
 ## template の書き方
+
 [example_template.cpp](https://github.com/tqkoh/ac/blob/master/example_template.cpp#L256) の下の方を見て
+
 - `{% if [v] %}` のみ、(`{% else %}` のみ、)`{% endif %}` のみからなる行で、v が空でないかで場合分けできる
 - `{{ [v] }}` で、v の中身を展開できる
   - 使える変数(全て文字列):
